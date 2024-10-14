@@ -82,6 +82,9 @@ bool ModuleSceneKen::CleanUp()
 update_status ModuleSceneKen::Update()
 {
 	// TODO 5: make sure the ship goes up and down
+	// Probably not the best method, but works
+	ship_y += ship_sum;
+	if (abs(ship_y) > 4) ship_sum *= -1;
 
 	// Draw everything --------------------------------------
 	// TODO 1: Tweak the movement speed of the sea&sky + flag to your taste -- Done
@@ -89,10 +92,10 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 2.0f); // flag animation
 
 	// TODO 3: Draw the ship. Be sure to tweak the speed.
-	App->renderer->Blit(graphics, 0, 0, &red_ship, 3.0f); // red ship
+	App->renderer->Blit(graphics, 0, (int)-ship_y, &red_ship, 3.0f); // red ship
 
 	// TODO 6: Draw the girl. Make sure it follows the ship movement!
-	App->renderer->Blit(graphics, 191, 103, &(girl.GetCurrentFrame()), 3.0f);
+	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame()), 3.0f);
 	
 	App->renderer->Blit(graphics, 0, 170, &ground);
 

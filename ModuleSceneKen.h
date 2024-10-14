@@ -25,6 +25,11 @@ public:
 	SDL_Rect red_ship;
 	Animation flag;
 	Animation girl;
+
+private:
+
+	float ship_y = 0;
+	float ship_sum = 0.2f;
 };
 
 #endif // __MODULESCENEKEN_H__

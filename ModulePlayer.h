@@ -18,12 +18,19 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void CheckPlayerInputs();
+	void Move();
+
 public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation idle;
 	Animation backward;
+	Animation forward;
 	iPoint position;
+
+private:
+	float speed;
 };
 
 #endif // __MODULEPLAYER_H__
