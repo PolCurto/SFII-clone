@@ -33,7 +33,7 @@ update_status ModuleFadeToBlack::Update()
 		if(fading_in == false)
 			normalized = 1.0f - normalized;
 
-		// Draw a screen-size balck rectangle with alpha
+		// Draw a screen-size black rectangle with alpha
 		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (normalized * 255.0f));
 		SDL_RenderFillRect(App->renderer->renderer, NULL);
 

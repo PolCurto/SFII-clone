@@ -30,6 +30,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	backward.speed = 0.1f;
 
 	// TODO 8: setup the walk forward animation from ryu4.png
+	
 }
 
 ModulePlayer::~ModulePlayer()
