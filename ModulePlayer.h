@@ -8,6 +8,14 @@
 
 struct SDL_Texture;
 
+enum PlayerState
+{
+	IDLE = 0,
+	MOVE_FORWARD = 1,
+	MOVE_BACKWARD = 2,
+	JUMP
+};
+
 class ModulePlayer : public Module
 {
 public:
@@ -21,6 +29,8 @@ public:
 	void CheckPlayerInputs();
 	void Move();
 
+	void DrawPlayer();
+
 public:
 
 	SDL_Texture* graphics = nullptr;
@@ -31,6 +41,7 @@ public:
 
 private:
 	float speed;
+	PlayerState state;
 };
 
 #endif // __MODULEPLAYER_H__

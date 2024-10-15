@@ -44,7 +44,7 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	girl.frames.push_back({ 624, 16, 32, 56 });
 	girl.frames.push_back({ 624, 80, 32, 56 });
 	girl.frames.push_back({ 624, 144, 32, 56 });
-	girl.speed = 0.08f;
+	girl.speed = 0.02f;
 
 }
 

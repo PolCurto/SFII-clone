@@ -18,7 +18,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	idle.frames.push_back({184, 14, 60, 90});
 	idle.frames.push_back({276, 11, 60, 93});
 	idle.frames.push_back({366, 12, 60, 92});
-	idle.speed = 0.1f;
+	idle.speed = 0.05f;
 	
 	// walk backward animation (arcade sprite sheet)
 	backward.frames.push_back({542, 131, 61, 87});
@@ -27,7 +27,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	backward.frames.push_back({797, 127, 57, 90});
 	backward.frames.push_back({883, 128, 58, 91});
 	backward.frames.push_back({974, 129, 57, 89});
-	backward.speed = 0.1f;
+	backward.speed = 0.05f;
 
 	// TODO 8: setup the walk forward animation from ryu4.png -- Done
 	forward.frames.push_back({ 9, 136, 53, 83 });
@@ -36,7 +36,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	forward.frames.push_back({ 259, 128, 63, 90 });
 	forward.frames.push_back({ 352, 128, 54, 91 });
 	forward.frames.push_back({ 432, 131, 50, 89 });
-	forward.speed = 0.4f;
+	forward.speed = 0.05f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -67,27 +67,62 @@ bool ModulePlayer::CleanUp()
 // Update
 update_status ModulePlayer::Update()
 {
+	// Update player position before drawing
+	CheckPlayerInputs();
+	Move();
+
 	// TODO 9: Draw the player with its animation
 	// make sure to detect player movement and change its
 	// position while cycling the animation(check Animation.h)
-	iPoint playerPosition = App->player->position;
-	SDL_Rect currentFrame = idle.GetCurrentFrame();
-
-	App->renderer->Blit(graphics, playerPosition.x, playerPosition.y - currentFrame.h, &currentFrame);
+	DrawPlayer();
+	
 
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::CheckPlayerInputs()
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	speed = 0;
+	state = IDLE;
+
+	// Right movement
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		// Move right, etc...
+		speed = 1.0f;
+		state = MOVE_FORWARD;
+	}
+
+	// Left Movement
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		speed = -1.0f;
+		state = MOVE_BACKWARD;
 	}
 }
 
 void ModulePlayer::Move()
 {
+	position.x += speed;
+}
 
+void ModulePlayer::DrawPlayer()
+{
+	iPoint playerPosition = App->player->position;
+
+	SDL_Rect currentFrame;
+
+	switch (state)
+	{
+		case IDLE:
+			currentFrame = idle.GetCurrentFrame();
+			break;
+		case MOVE_FORWARD:
+			currentFrame = forward.GetCurrentFrame();
+			break;
+		case MOVE_BACKWARD:
+			currentFrame = backward.GetCurrentFrame();
+	}
+
+	App->renderer->Blit(graphics, playerPosition.x, playerPosition.y - currentFrame.h, &currentFrame);
 }
 
