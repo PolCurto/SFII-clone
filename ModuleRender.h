@@ -21,10 +21,14 @@ public:
 	bool CleanUp();
 
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f);
+	void CamFollowPlayer();
 
 public:
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect camera;
+
+private:
+	bool debugCamera = false;
 };
 
 #endif // __MODULERENDER_H__

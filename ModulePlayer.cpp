@@ -123,6 +123,7 @@ void ModulePlayer::DrawPlayer()
 			currentFrame = backward.GetCurrentFrame();
 	}
 
-	App->renderer->Blit(graphics, playerPosition.x, playerPosition.y - currentFrame.h, &currentFrame);
+	// Speed of 3 to match the camera speed, don't really know why
+	App->renderer->Blit(graphics, playerPosition.x, playerPosition.y - currentFrame.h, &currentFrame, SCREEN_SIZE);
 }
 

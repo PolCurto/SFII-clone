@@ -3,6 +3,7 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModulePlayer.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender()
@@ -52,17 +53,26 @@ update_status ModuleRender::Update()
 	// debug camera
 	int speed = 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) debugCamera = !debugCamera;
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
+	if (debugCamera)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			App->renderer->camera.y += speed;
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			App->renderer->camera.y -= speed;
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			App->renderer->camera.x += speed;
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			App->renderer->camera.x -= speed;
+	}
+	else
+	{
+		CamFollowPlayer();
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -115,4 +125,14 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	}
 
 	return ret;
+}
+
+void ModuleRender::CamFollowPlayer()
+{
+	camera.x = -(App->player->position.x - SCREEN_WIDTH/3);
+	camera.y = 0;
+
+
+	if (camera.x > 0) camera.x = 0;
+	else if (camera.x < -575) camera.x = -575;
 }

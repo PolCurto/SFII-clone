@@ -97,7 +97,7 @@ update_status ModuleSceneKen::Update()
 	// TODO 6: Draw the girl. Make sure it follows the ship movement!
 	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame()), 3.0f);
 	
-	App->renderer->Blit(graphics, 0, 170, &ground);
+	App->renderer->Blit(graphics, 0, 170, &ground, SCREEN_SIZE);
 
 	// TODO 10: Build an entire new scene "honda", you can find its
 	// and music in the Game/ folder
