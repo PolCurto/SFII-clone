@@ -1,5 +1,5 @@
-#ifndef __MODULEPLAYER_H__
-#define __MODULEPLAYER_H__
+#ifndef __MODULEENEMY_H__
+#define __MODULEPENEMY_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -8,33 +8,32 @@
 
 struct SDL_Texture;
 
-enum PlayerState
+enum EnemyState
 {
-	IDLE = 0,
-	MOVEMENT,
-	COMBAT
+	EIDLE = 0,
+	EMOVEMENT,
+	ECOMBAT
 };
 
-enum AttackState
+enum EnemyAttackState
 {
-	L_PUNCH,
-	M_PUNCH
+	EL_PUNCH,
+	EM_PUNCH
 };
 
-class ModulePlayer : public Module
+class ModuleEnemy : public Module
 {
 public:
-	ModulePlayer(bool start_enabled = true);
-	~ModulePlayer();
+	ModuleEnemy(bool start_enabled = true);
+	~ModuleEnemy();
 
 	bool Start();
 	update_status Update();
 	bool CleanUp();
 
-	void CheckPlayerInputs();
 	void Move();
 
-	void DrawPlayer();
+	void DrawEnemy();
 
 public:
 
@@ -49,8 +48,8 @@ public:
 
 private:
 	float speed;
-	PlayerState state;
-	AttackState attackState;
+	EnemyState state;
+	EnemyAttackState attackState;
 };
 
-#endif // __MODULEPLAYER_H__
+#endif // __MODULEENEMY_H__

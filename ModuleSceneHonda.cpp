@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
+#include "ModuleEnemy.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
@@ -76,12 +77,14 @@ bool ModuleSceneHonda::Start()
 
 	// TODO 7: Enable the player module
 	App->player->Enable();
+	App->enemy->Enable();
 
 	// TODO 0: trigger background music
 	App->audio->PlayMusic("honda.ogg");
 
 	// Set camera limit
 	App->renderer->cameraLimit = 240;
+	App->player->positionLimit = 560;
 
 	return true;
 }

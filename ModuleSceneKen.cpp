@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
+#include "ModuleEnemy.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
@@ -60,12 +61,14 @@ bool ModuleSceneKen::Start()
 
 	// TODO 7: Enable the player module
 	App->player->Enable();
+	App->enemy->Enable();
 
 	// TODO 0: trigger background music
 	App->audio->PlayMusic("ken.ogg");
 
 	// Set camera limit
 	App->renderer->cameraLimit = 500;
+	App->player->positionLimit = 820;
 	
 	return true;
 }

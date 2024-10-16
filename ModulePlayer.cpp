@@ -137,7 +137,10 @@ void ModulePlayer::CheckPlayerInputs()
 
 void ModulePlayer::Move()
 {
-	position.x += speed;
+	position.x += (int)speed;
+
+	if (position.x < 0) position.x = 0;
+	if (position.x > positionLimit) position.x = positionLimit;
 }
 
 void ModulePlayer::DrawPlayer()

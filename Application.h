@@ -12,6 +12,7 @@ class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModulePlayer;
+class ModuleEnemy;
 class ModuleSceneKen;
 class ModuleSceneHonda;
 
@@ -34,6 +35,7 @@ public:
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
 	ModulePlayer* player;
+	ModuleEnemy* enemy;
 	ModuleSceneKen* scene_ken;
 	ModuleSceneHonda* scene_honda;
 
