@@ -80,6 +80,7 @@ bool ModuleSceneKen::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->player->Disable();
+	App->enemy->Disable();
 	
 	return true;
 }

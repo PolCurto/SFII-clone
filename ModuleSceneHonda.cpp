@@ -75,16 +75,16 @@ bool ModuleSceneHonda::Start()
 	graphics = App->textures->Load("honda_stage2.png");
 	animation = App->textures->Load("honda_stage.png");
 
+	// Set camera limit
+	App->renderer->cameraLimit = 240;
+	App->player->positionLimit = App->enemy->positionLimit = 560;
+
 	// TODO 7: Enable the player module
 	App->player->Enable();
 	App->enemy->Enable();
 
 	// TODO 0: trigger background music
 	App->audio->PlayMusic("honda.ogg");
-
-	// Set camera limit
-	App->renderer->cameraLimit = 240;
-	App->player->positionLimit = App->enemy->positionLimit = 560;
 
 	return true;
 }
@@ -96,6 +96,7 @@ bool ModuleSceneHonda::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->player->Disable();
+	App->enemy->Disable();
 
 	return true;
 }

@@ -1,55 +1,23 @@
 #ifndef __MODULEENEMY_H__
 #define __MODULEPENEMY_H__
 
-#include "Module.h"
+#include "ModuleCharacter.h"
 #include "Animation.h"
 #include "Globals.h"
 #include "Point.h"
 
 struct SDL_Texture;
 
-enum EnemyState
-{
-	EIDLE = 0,
-	EMOVEMENT,
-	ECOMBAT
-};
 
-enum EnemyAttackState
-{
-	EL_PUNCH,
-	EM_PUNCH
-};
-
-class ModuleEnemy : public Module
+class ModuleEnemy : public ModuleCharacter
 {
 public:
 	ModuleEnemy(bool start_enabled = true);
 	~ModuleEnemy();
 
-	bool Start();
-	update_status Update();
-	bool CleanUp();
-
-	void Move();
-
-	void DrawEnemy();
-
-public:
-
-	SDL_Texture* graphics = nullptr;
-	Animation idle;
-	Animation backward;
-	Animation forward;
-	Animation light_punch;
-	Animation medium_punch;
-	iPoint position;
-	int positionLimit;
-
-private:
-	float speed;
-	EnemyState state = EIDLE;
-	EnemyAttackState attackState;
+	bool Start() override;
+	update_status Update() override;
+	bool CleanUp() override;
 };
 
 #endif // __MODULEENEMY_H__
