@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneHonda.h"
+#include "ModuleSceneKen.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
@@ -79,6 +80,9 @@ bool ModuleSceneHonda::Start()
 	// TODO 0: trigger background music
 	App->audio->PlayMusic("honda.ogg");
 
+	// Set camera limit
+	App->renderer->cameraLimit = 240;
+
 	return true;
 }
 
@@ -109,6 +113,12 @@ update_status ModuleSceneHonda::Update()
 	App->renderer->Blit(graphics, 203, 152, &(water.GetCurrentFrame()), SCREEN_SIZE); // water animation
 
 	App->renderer->Blit(graphics, 90, 165, &barrel, SCREEN_SIZE); // barrel
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		// Switch too ken module
+		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, 3.0f);
+	}
 
 	return UPDATE_CONTINUE;
 }

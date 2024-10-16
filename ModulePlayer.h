@@ -11,9 +11,14 @@ struct SDL_Texture;
 enum PlayerState
 {
 	IDLE = 0,
-	MOVE_FORWARD = 1,
-	MOVE_BACKWARD = 2,
-	JUMP
+	MOVEMENT,
+	COMBAT
+};
+
+enum AttackState
+{
+	L_PUNCH,
+	M_PUNCH
 };
 
 class ModulePlayer : public Module
@@ -37,11 +42,14 @@ public:
 	Animation idle;
 	Animation backward;
 	Animation forward;
+	Animation light_punch;
+	Animation medium_punch;
 	iPoint position;
 
 private:
 	float speed;
 	PlayerState state;
+	AttackState attackState;
 };
 
 #endif // __MODULEPLAYER_H__

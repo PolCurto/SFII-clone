@@ -63,6 +63,9 @@ bool ModuleSceneKen::Start()
 
 	// TODO 0: trigger background music
 	App->audio->PlayMusic("ken.ogg");
+
+	// Set camera limit
+	App->renderer->cameraLimit = 500;
 	
 	return true;
 }
@@ -102,9 +105,8 @@ update_status ModuleSceneKen::Update()
 	// TODO 10: Build an entire new scene "honda", you can find its
 	// and music in the Game/ folder
 
-	// TODO 11: Make that pressing space triggers a switch to honda logic module
+	// TODO 11: Make that pressing space triggers a switch to honda logic module -- Donee
 	// using FadeToBlack module
-
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		// Switch too honda module

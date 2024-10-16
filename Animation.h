@@ -19,8 +19,19 @@ public:
 	SDL_Rect& GetCurrentFrame()
 	{
 		current_frame += speed;
-		if(current_frame >= frames.size())
+		if (current_frame >= frames.size())
 			current_frame = 0.0f;
+		return frames[(int)current_frame];
+	}
+
+	SDL_Rect& GetCurrentFrameLimited(bool& finished)
+	{
+		current_frame += speed;
+		if (current_frame >= frames.size())
+		{
+			finished = true;
+			current_frame = 0.0;
+		}	
 		return frames[(int)current_frame];
 	}
 };
