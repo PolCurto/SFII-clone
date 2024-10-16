@@ -84,7 +84,7 @@ bool ModuleSceneHonda::Start()
 
 	// Set camera limit
 	App->renderer->cameraLimit = 240;
-	App->player->positionLimit = 560;
+	App->player->positionLimit = App->enemy->positionLimit = 560;
 
 	return true;
 }

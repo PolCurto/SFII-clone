@@ -45,7 +45,7 @@ public:
 	Animation light_punch;
 	Animation medium_punch;
 	iPoint position;
-	float positionLimit;
+	int positionLimit;
 
 private:
 	float speed;

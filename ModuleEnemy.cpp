@@ -10,7 +10,11 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : Module(start_enabled)
 {
 
 	// idle animation (arcade sprite sheet)
-
+	idle.frames.push_back({ 9, 13, 97, 95 });
+	idle.frames.push_back({ 115, 12, 96, 96 });
+	idle.frames.push_back({ 218, 10, 95, 98 });
+	idle.frames.push_back({ 115, 12, 96, 96 });
+	idle.speed = 0.05f;
 
 	// walk backward animation (arcade sprite sheet)
 
@@ -35,13 +39,13 @@ ModuleEnemy::~ModuleEnemy()
 // Load assets
 bool ModuleEnemy::Start()
 {
-	LOG("Loading player");
+	LOG("Loading enemy");
 
 	// Set the position
-	position.x = 400;
+	position.x = 200;
 	position.y = 216;
 
-	graphics = App->textures->Load("ryu4.png"); // arcade version
+	graphics = App->textures->Load("blanka.png"); // arcade version
 
 	return true;
 }
@@ -49,7 +53,7 @@ bool ModuleEnemy::Start()
 // Unload assets
 bool ModuleEnemy::CleanUp()
 {
-	LOG("Unloading player");
+	LOG("Unloading enemy");
 
 	App->textures->Unload(graphics);
 
@@ -69,10 +73,12 @@ update_status ModuleEnemy::Update()
 
 void ModuleEnemy::Move()
 {
+	/*
 	position.x += (int)speed;
 
 	if (position.x < 0) position.x = 0;
 	if (position.x > positionLimit) position.x = positionLimit;
+	*/
 }
 
 void ModuleEnemy::DrawEnemy()
@@ -113,6 +119,8 @@ void ModuleEnemy::DrawEnemy()
 	if (finished) state = EIDLE;
 
 	// Speed of 3 to match the camera speed, don't really know why
-	App->renderer->Blit(graphics, enemyPosition.x, enemyPosition.y - currentFrame.h, &currentFrame, SCREEN_SIZE);
+	App->renderer->Blit(graphics, enemyPosition.x, enemyPosition.y - currentFrame.h, &currentFrame, SCREEN_SIZE, true);
+
+	LOG("Enemy update");
 }
 

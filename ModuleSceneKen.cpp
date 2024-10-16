@@ -68,7 +68,7 @@ bool ModuleSceneKen::Start()
 
 	// Set camera limit
 	App->renderer->cameraLimit = 500;
-	App->player->positionLimit = 820;
+	App->player->positionLimit = App->enemy->positionLimit = 820;
 	
 	return true;
 }
