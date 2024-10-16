@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneKen.h"
+#include "ModuleSceneHonda.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
@@ -45,7 +46,6 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	girl.frames.push_back({ 624, 80, 32, 56 });
 	girl.frames.push_back({ 624, 144, 32, 56 });
 	girl.speed = 0.02f;
-
 }
 
 ModuleSceneKen::~ModuleSceneKen()
@@ -104,6 +104,12 @@ update_status ModuleSceneKen::Update()
 
 	// TODO 11: Make that pressing space triggers a switch to honda logic module
 	// using FadeToBlack module
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		// Switch too honda module
+		App->fade->FadeToBlack(App->scene_honda, App->scene_ken, 3.0f);
+	}
 
 	return UPDATE_CONTINUE;
 }
