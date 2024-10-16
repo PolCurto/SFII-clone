@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModulePlayer.h"
+#include "ModuleEnemy.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -88,6 +89,19 @@ update_status ModulePlayer::Update()
 	// Update player position before drawing
 	CheckPlayerInputs();
 	return ModuleCharacter::Update();
+}
+
+void ModulePlayer::Move()
+{
+	ModuleCharacter::Move();
+	if (App->enemy->position.x > position.x)
+	{
+		isFlipped = false;
+	}
+	else
+	{
+		isFlipped = true;
+	}
 }
 
 void ModulePlayer::CheckPlayerInputs()

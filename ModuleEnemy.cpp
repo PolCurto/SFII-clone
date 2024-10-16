@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModulePlayer.h"
 #include "ModuleEnemy.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -63,6 +64,20 @@ bool ModuleEnemy::CleanUp()
 // Update
 update_status ModuleEnemy::Update()
 {
+	//Move();
 	return ModuleCharacter::Update();
+}
+
+void ModuleEnemy::Move()
+{
+	ModuleCharacter::Move();
+	if (App->player->position.x > position.x)
+	{
+		isFlipped = false;
+	}
+	else
+	{
+		isFlipped = true;
+	}
 }
 

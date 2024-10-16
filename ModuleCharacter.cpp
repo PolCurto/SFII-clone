@@ -16,9 +16,8 @@ ModuleCharacter::ModuleCharacter(bool start_enabled) : Module(start_enabled)
 // Update
 update_status ModuleCharacter::Update()
 {
-	Move();
 	DrawToScreen();
-
+	Move();
 	return UPDATE_CONTINUE;
 }
 
@@ -41,7 +40,7 @@ void ModuleCharacter::DrawToScreen()
 			currentFrame = idle.GetCurrentFrame();
 			break;
 		case MOVEMENT:
-			if (speed > 0.0f)
+			if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
 			{
 				currentFrame = forward.GetCurrentFrame();
 			}
@@ -69,6 +68,6 @@ void ModuleCharacter::DrawToScreen()
 	if (finished) state = IDLE;
 
 	// Speed of 3 to match the camera speed, don't really know why
-	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE);
+	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
 }
 

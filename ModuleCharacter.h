@@ -7,6 +7,7 @@
 #include "Point.h"
 
 struct SDL_Texture;
+class ModuleEnemy;
 
 enum CharacterState
 {
@@ -50,6 +51,7 @@ protected:
 	float speed = 0.0f;
 	CharacterState state;
 	AttackState attackState;
+	bool isFlipped;
 };
 
 #endif // __MODULECHARACTER_H__

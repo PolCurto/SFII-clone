@@ -18,6 +18,8 @@ public:
 	bool Start() override;
 	update_status Update() override;
 	bool CleanUp() override;
+
+	void Move() override;
 };
 
 #endif // __MODULEENEMY_H__

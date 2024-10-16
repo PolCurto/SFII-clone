@@ -19,6 +19,7 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
+	void Move() override;
 	void CheckPlayerInputs();
 };
 
