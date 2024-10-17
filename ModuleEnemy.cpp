@@ -26,15 +26,30 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	backward.frames.push_back({ 518, 125, 79, 93 });
 	backward.frames.push_back({ 620, 132, 78, 81 });
 	backward.frames.push_back({ 720, 128, 72, 86 });
+	backward.speed = 0.05f;
 
 	// walk forward animation
-
+	forward.frames.push_back({ 335, 31, 82, 72 });
+	forward.frames.push_back({ 440, 34, 78, 68 });
+	forward.frames.push_back({ 542, 30, 77, 77 });
+	forward.frames.push_back({ 639, 25, 86, 82 });
+	forward.frames.push_back({ 751, 30, 77, 77 });
+	forward.frames.push_back({ 852, 34, 79, 73 });
+	forward.frames.push_back({ 945, 31, 85, 76 });
+	forward.frames.push_back({ 1033, 26, 99, 77 });
+	forward.speed = 0.05f;
 
 	// Light punch animation
+	light_punch.frames.push_back({ 11, 436, 97, 94 });
+	light_punch.frames.push_back({ 121, 433, 135, 97 });
+	light_punch.frames.push_back({ 268, 433, 109, 97 });
+	light_punch.speed = 0.05f;
 
-
-	// Medium punch animation
-
+	// Light kick punch animation
+	medium_punch.frames.push_back({ 10, 730, 81, 97 });
+	medium_punch.frames.push_back({ 105, 732, 97, 95 });
+	medium_punch.frames.push_back({ 219, 733, 137, 95 });
+	medium_punch.speed = 0.05f;
 
 	// Hadouken animation
 }
@@ -145,33 +160,41 @@ void ModuleEnemy::DoSomething()
 		{
 			// Walk forward
 			LOG("WALK FOERWARD");
-			//state = MOVEMENT;
-			//speed = 1.0f;
+			state = MOVEMENT;
+			speed = 1.0f;
 		}
-		else if (random < 100)
+		else if (random < 40)
 		{
 			LOG("WALK BACK");
 			// Walk backwards
-			//state = MOVEMENT;
-			//speed = -1.0f;
+			state = MOVEMENT;
+			speed = -1.0f;
 		}
 		else if (random < 60)
 		{
-			// Crouch
+			// Idle
+			LOG("IDLE");
 			speed = 0;
+			state = IDLE;
 		}
 		else if (random < 80)
 		{
 			//Light punch
+			LOG("LIGHT PUNCH");
 			speed = 0;
+			state = COMBAT;
+			attackState = L_PUNCH;
 		}
 		else
 		{
 			//Light kick
+			LOG("LIGHT KICK");
 			speed = 0;
+			state = COMBAT;
+			attackState = M_PUNCH;
 		}
 		
 	}
 
-	timer += 0.01f;
+	timer += 0.02f;
 }
