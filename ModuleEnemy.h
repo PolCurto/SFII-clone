@@ -21,6 +21,12 @@ public:
 
 	void Move() override;
 	void DrawToScreen();
+
+	void DoSomething();
+
+private: 
+	float timer = 0;
+	float time_to_act = 4.0f;
 };
 
 #endif // __MODULEENEMY_H__

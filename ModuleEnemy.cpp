@@ -18,7 +18,14 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	idle.speed = 0.04f;
 
 	// walk backward animation (arcade sprite sheet)
-
+	backward.frames.push_back({ 5, 124, 96, 90 });
+	backward.frames.push_back({ 118, 128, 78, 90 });
+	backward.frames.push_back({ 215, 132, 78, 76 });
+	backward.frames.push_back({ 314, 125, 79, 93 });
+	backward.frames.push_back({ 413, 124, 84, 94 });
+	backward.frames.push_back({ 518, 125, 79, 93 });
+	backward.frames.push_back({ 620, 132, 78, 81 });
+	backward.frames.push_back({ 720, 128, 72, 86 });
 
 	// walk forward animation
 
@@ -64,6 +71,7 @@ bool ModuleEnemy::CleanUp()
 // Update
 update_status ModuleEnemy::Update()
 {
+	DoSomething();
 	ModuleCharacter::Update();
 	DrawToScreen();
 	return UPDATE_CONTINUE;
@@ -122,4 +130,48 @@ void ModuleEnemy::DrawToScreen()
 
 	// Speed of 3 to match the camera speed, don't really know why
 	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+}
+
+void ModuleEnemy::DoSomething()
+{
+	if (timer > time_to_act)
+	{
+		timer = 0;
+
+		// Do smoething random, p. ex: walk, crouch, hit
+		int random = rand() % 100;
+		
+		if (random < 20)
+		{
+			// Walk forward
+			LOG("WALK FOERWARD");
+			//state = MOVEMENT;
+			//speed = 1.0f;
+		}
+		else if (random < 100)
+		{
+			LOG("WALK BACK");
+			// Walk backwards
+			//state = MOVEMENT;
+			//speed = -1.0f;
+		}
+		else if (random < 60)
+		{
+			// Crouch
+			speed = 0;
+		}
+		else if (random < 80)
+		{
+			//Light punch
+			speed = 0;
+		}
+		else
+		{
+			//Light kick
+			speed = 0;
+		}
+		
+	}
+
+	timer += 0.01f;
 }
