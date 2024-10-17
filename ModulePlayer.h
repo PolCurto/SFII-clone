@@ -2,6 +2,7 @@
 #define __MODULEPLAYER_H__
 
 #include "ModuleCharacter.h"
+#include "ModuleHadouken.h"
 #include "Animation.h"
 #include "Globals.h"
 #include "Point.h"
@@ -21,6 +22,13 @@ public:
 
 	void Move() override;
 	void CheckPlayerInputs();
+	void DrawToScreen();
+
+	void ThrowHadouken();
+
+private:
+	ModuleHadouken* hadouken;
+	Animation hadouken_anim;
 };
 
 #endif // __MODULEPLAYER_H__

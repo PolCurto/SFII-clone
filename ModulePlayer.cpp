@@ -10,7 +10,6 @@
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 {
-
 	// idle animation (arcade sprite sheet)
 	idle.frames.push_back({7, 14, 60, 90});
 	idle.frames.push_back({95, 15, 60, 89});
@@ -52,6 +51,11 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	medium_punch.speed = 0.06f;
 
 	// Hadouken animation
+	hadouken_anim.frames.push_back({ 34, 1545, 74, 90 });
+	hadouken_anim.frames.push_back({ 135, 1551, 85, 86 });
+	hadouken_anim.frames.push_back({ 244, 1552, 90, 87 });
+	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
+	hadouken_anim.speed = 0.05f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -66,9 +70,11 @@ bool ModulePlayer::Start()
 
 	// Set the position
 	position.x = 100;
-	position.y = 216;
+	position.y = 215;
 
 	graphics = App->textures->Load("ryu4.png"); // arcade version
+
+	hadouken = App->hadouken;
 
 	return true;
 }
@@ -79,6 +85,7 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
+	hadouken = nullptr;
 
 	return true;
 }
@@ -88,7 +95,15 @@ update_status ModulePlayer::Update()
 {
 	// Update player position before drawing
 	CheckPlayerInputs();
-	return ModuleCharacter::Update();
+	ModuleCharacter::Update();
+	DrawToScreen();
+
+	if (hadouken->IsEnabled() && (hadouken->finished))
+	{
+		hadouken->Disable();
+	}
+
+	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::Move()
@@ -139,5 +154,68 @@ void ModulePlayer::CheckPlayerInputs()
 		state = COMBAT;
 		attackState = M_PUNCH;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN && !hadouken->IsEnabled())
+	{
+		speed = 0.0f;
+		state = COMBAT;
+		attackState = HADOUKEN;
+	}
 }
+
+void ModulePlayer::DrawToScreen()
+{
+	SDL_Rect currentFrame;
+	bool finished = false;
+
+	switch (state)
+	{
+	case IDLE:
+		currentFrame = idle.GetCurrentFrame();
+		break;
+	case MOVEMENT:
+		if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
+		{
+			currentFrame = forward.GetCurrentFrame();
+		}
+		else
+		{
+			currentFrame = backward.GetCurrentFrame();
+		}
+		break;
+	case COMBAT:
+		switch (attackState)
+		{
+			case L_PUNCH:
+				currentFrame = light_punch.GetCurrentFrameLimited(finished);
+				break;
+			case M_PUNCH:
+				currentFrame = medium_punch.GetCurrentFrameLimited(finished);
+				break;
+			case HADOUKEN:
+				int frame_num = 0;
+				currentFrame = hadouken_anim.GetCurrentFrameNum(finished, frame_num);
+				if (frame_num == 3)
+				{
+					ThrowHadouken();
+				}
+				break;
+		}
+		break;
+	default:
+		currentFrame = idle.GetCurrentFrame();
+		break;
+	}
+
+	if (finished) state = IDLE;
+
+	// Speed of 3 to match the camera speed, don't really know why
+	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+}
+
+void ModulePlayer::ThrowHadouken()
+{
+	hadouken->isFlipped = isFlipped;
+	hadouken->Enable();
+}
+
 

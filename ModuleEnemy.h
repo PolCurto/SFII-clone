@@ -20,6 +20,7 @@ public:
 	bool CleanUp() override;
 
 	void Move() override;
+	void DrawToScreen();
 };
 
 #endif // __MODULEENEMY_H__

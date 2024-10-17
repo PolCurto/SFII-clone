@@ -15,6 +15,7 @@ class ModulePlayer;
 class ModuleEnemy;
 class ModuleSceneKen;
 class ModuleSceneHonda;
+class ModuleHadouken;
 
 class Application
 {
@@ -38,6 +39,7 @@ public:
 	ModuleEnemy* enemy;
 	ModuleSceneKen* scene_ken;
 	ModuleSceneHonda* scene_honda;
+	ModuleHadouken* hadouken;
 
 private:
 

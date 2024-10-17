@@ -34,4 +34,16 @@ public:
 		}	
 		return frames[(int)current_frame];
 	}
+
+	SDL_Rect& GetCurrentFrameNum(bool& finished, int& frameNum)
+	{
+		current_frame += speed;
+		frameNum = (int)current_frame;
+		if (current_frame >= frames.size())
+		{
+			finished = true;
+			current_frame = 0.0;
+		}
+		return frames[(int)current_frame];
+	}
 };

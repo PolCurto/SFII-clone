@@ -44,7 +44,7 @@ bool ModuleEnemy::Start()
 
 	// Set the position
 	position.x = 300;
-	position.y = 216;
+	position.y = 215;
 
 	graphics = App->textures->Load("blanka.png"); // arcade version
 
@@ -64,8 +64,9 @@ bool ModuleEnemy::CleanUp()
 // Update
 update_status ModuleEnemy::Update()
 {
-	//Move();
-	return ModuleCharacter::Update();
+	ModuleCharacter::Update();
+	DrawToScreen();
+	return UPDATE_CONTINUE;
 }
 
 void ModuleEnemy::Move()
@@ -81,3 +82,44 @@ void ModuleEnemy::Move()
 	}
 }
 
+void ModuleEnemy::DrawToScreen()
+{
+	SDL_Rect currentFrame;
+	bool finished = false;
+
+	switch (state)
+	{
+	case IDLE:
+		currentFrame = idle.GetCurrentFrame();
+		break;
+	case MOVEMENT:
+		if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
+		{
+			currentFrame = forward.GetCurrentFrame();
+		}
+		else
+		{
+			currentFrame = backward.GetCurrentFrame();
+		}
+		break;
+	case COMBAT:
+		switch (attackState)
+		{
+		case L_PUNCH:
+			currentFrame = light_punch.GetCurrentFrameLimited(finished);
+			break;
+		case M_PUNCH:
+			currentFrame = medium_punch.GetCurrentFrameLimited(finished);
+			break;
+		}
+		break;
+	default:
+		currentFrame = idle.GetCurrentFrame();
+		break;
+	}
+
+	if (finished) state = IDLE;
+
+	// Speed of 3 to match the camera speed, don't really know why
+	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+}

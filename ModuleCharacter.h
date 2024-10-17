@@ -20,24 +20,23 @@ enum AttackState
 {
 	NO_ATTACK,
 	L_PUNCH,
-	M_PUNCH
+	M_PUNCH,
+	HADOUKEN
 };
 
 class ModuleCharacter : public Module
 {
 public:
 	ModuleCharacter(bool start_enabled = false);
-	~ModuleCharacter() {};
+	~ModuleCharacter();
 
 	virtual bool Start() { return true; }
 	virtual update_status Update();
 	virtual bool CleanUp() { return true; };
 
 	virtual void Move();
-	virtual void DrawToScreen();
 
 public:
-
 	SDL_Texture* graphics = nullptr;
 	Animation idle;
 	Animation backward;

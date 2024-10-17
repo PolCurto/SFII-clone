@@ -95,6 +95,7 @@ bool ModuleSceneHonda::CleanUp()
 	LOG("Unloading ken scene");
 
 	App->textures->Unload(graphics);
+	App->textures->Unload(animation);
 	App->player->Disable();
 	App->enemy->Disable();
 
