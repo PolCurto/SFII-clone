@@ -73,7 +73,8 @@ void ModuleHadouken::Move()
 void ModuleHadouken::Despawn()
 {
 	//LOG("HADOUKEN DESPAWN");
-	App->renderer->Blit(graphics, position.x, position.y, &(despawn.GetCurrentFrameLimited(finished)), SCREEN_SIZE, isFlipped);
+	App->renderer->Blit(graphics, position.x, position.y, &(despawn.GetCurrentFrame(false)), SCREEN_SIZE, isFlipped);
+	finished = despawn.finished;
 }
 
 void ModuleHadouken::SetPosition(int x, int y)

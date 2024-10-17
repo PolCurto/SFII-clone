@@ -108,40 +108,39 @@ void ModuleEnemy::Move()
 void ModuleEnemy::DrawToScreen()
 {
 	SDL_Rect currentFrame;
-	bool finished = false;
 
 	switch (state)
 	{
 	case IDLE:
-		currentFrame = idle.GetCurrentFrame();
+		currentFrame = idle.GetCurrentFrame(true);
 		break;
 	case MOVEMENT:
 		if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
 		{
-			currentFrame = forward.GetCurrentFrame();
+			currentFrame = forward.GetCurrentFrame(true);
 		}
 		else
 		{
-			currentFrame = backward.GetCurrentFrame();
+			currentFrame = backward.GetCurrentFrame(true);
 		}
 		break;
 	case COMBAT:
 		switch (attackState)
 		{
 		case L_PUNCH:
-			currentFrame = light_punch.GetCurrentFrameLimited(finished);
+			currentFrame = light_punch.GetCurrentFrame(false);
+			if (light_punch.finished) state = IDLE;
 			break;
 		case M_PUNCH:
-			currentFrame = medium_punch.GetCurrentFrameLimited(finished);
+			currentFrame = medium_punch.GetCurrentFrame(false);
+			if (light_punch.finished) state = IDLE;
 			break;
 		}
 		break;
 	default:
-		currentFrame = idle.GetCurrentFrame();
+		currentFrame = idle.GetCurrentFrame(true);
 		break;
 	}
-
-	if (finished) state = IDLE;
 
 	// Speed of 3 to match the camera speed, don't really know why
 	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
