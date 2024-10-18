@@ -43,6 +43,9 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	last_time = std::chrono::high_resolution_clock::now();
+	current_time = last_time;
+
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init(); // we init everything, even if not anabled
 
@@ -61,6 +64,11 @@ bool Application::Init()
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
+	
+	current_time = std::chrono::steady_clock::now();
+	delta = current_time - last_time;
+	LOG("first: %f", delta);
+	last_time = std::chrono::steady_clock::now();
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
@@ -73,6 +81,21 @@ update_status Application::Update()
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PostUpdate();
+	
+	/*
+	auto currentTime = std::chrono::high_resolution_clock::now();
+
+	// Calculate the frame duration (time between frames)
+	std::chrono::duration<double> delta = currentFrameTime - previousFrameTime;
+	frameDuration = delta.count();
+
+	// Output the frame duration in seconds
+	std::cout << "Frame duration: " << frameDuration << " seconds" << std::endl;
+
+	// Update previous frame time for the next loop
+	previousFrameTime = currentFrameTime;
+	*/
+
 
 	return ret;
 }
