@@ -164,7 +164,7 @@ void ModuleEnemy::DrawToScreen()
 	}
 
 	// Speed of 3 to match the camera speed, don't really know why
-	App->renderer->Blit(graphics, position.x, position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
 }
 
 void ModuleEnemy::DoSomething()

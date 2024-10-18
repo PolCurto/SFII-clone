@@ -35,12 +35,14 @@ public:
 	virtual bool CleanUp() { return true; };
 
 	virtual void Move();
+	virtual void SetPositionLimits(int min, int max);
 
 public:
 	SDL_Texture* graphics = nullptr;
 	Animator animator;
 	iPoint position;
-	int positionLimit;
+	int maxPositionLimit;
+	int minPositionLimit;
 
 protected:
 	float speed = 0.0f;

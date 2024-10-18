@@ -8,7 +8,8 @@
 
 ModuleCharacter::ModuleCharacter(bool start_enabled) : Module(start_enabled)
 {
-	positionLimit = 0;
+	minPositionLimit = 0;
+	maxPositionLimit = 500;
 	state = IDLE;
 	attackState = NO_ATTACK;
 	isFlipped = false;
@@ -28,7 +29,13 @@ void ModuleCharacter::Move()
 {
 	position.x += (int)speed;
 
-	if (position.x < 0) position.x = 0;
-	if (position.x > positionLimit) position.x = positionLimit;
+	if (position.x < minPositionLimit) position.x = minPositionLimit;
+	if (position.x > maxPositionLimit) position.x = maxPositionLimit;
+}
+
+void ModuleCharacter::SetPositionLimits(int min, int max)
+{
+	minPositionLimit = min + 30;
+	maxPositionLimit = max - 30;
 }
 

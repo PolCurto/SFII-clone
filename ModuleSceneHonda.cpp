@@ -77,7 +77,6 @@ bool ModuleSceneHonda::Start()
 
 	// Set camera limit
 	App->renderer->cameraLimit = 240;
-	App->player->positionLimit = App->enemy->positionLimit = 560;
 
 	// TODO 7: Enable the player module
 	App->player->Enable();
@@ -126,4 +125,9 @@ update_status ModuleSceneHonda::Update()
 	}
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneHonda::SetCharactersLimit()
+{
+
 }

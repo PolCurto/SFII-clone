@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModulePlayer.h"
+#include "ModuleEnemy.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender()
@@ -133,7 +134,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 void ModuleRender::CamFollowPlayer()
 {
-	camera.x = -(App->player->position.x - SCREEN_WIDTH/3);
+	camera.x = -((App->player->position.x + App->enemy->position.x) / 2) + (SCREEN_WIDTH / 2);
 	camera.y = 0;
 
 

@@ -17,6 +17,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void SetCharactersLimit();
+
 public:
 
 	SDL_Texture* graphics = nullptr;

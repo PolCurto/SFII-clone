@@ -68,7 +68,6 @@ bool ModuleSceneKen::Start()
 
 	// Set camera limit
 	App->renderer->cameraLimit = 500;
-	App->player->positionLimit = App->enemy->positionLimit = 820;
 	
 	return true;
 }
@@ -102,7 +101,7 @@ update_status ModuleSceneKen::Update()
 	App->renderer->Blit(graphics, 0, (int)-ship_y, &red_ship, 2.5f); // red ship
 
 	// TODO 6: Draw the girl. Make sure it follows the ship movement!
-	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame()), 3.0f);
+	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame()), 2.5f);
 	
 	App->renderer->Blit(graphics, 0, 170, &ground, SCREEN_SIZE);
 
@@ -117,5 +116,13 @@ update_status ModuleSceneKen::Update()
 		App->fade->FadeToBlack(App->scene_honda, App->scene_ken, 3.0f);
 	}
 
+	SetCharactersLimit();
+
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneKen::SetCharactersLimit()
+{
+	App->player->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);
+	App->enemy->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);
 }
