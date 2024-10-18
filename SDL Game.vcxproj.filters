@@ -70,6 +70,9 @@
     <ClInclude Include="ModuleHadouken.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

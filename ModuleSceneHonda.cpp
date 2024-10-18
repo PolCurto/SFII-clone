@@ -109,13 +109,13 @@ update_status ModuleSceneHonda::Update()
 	App->renderer->Blit(graphics, -100, 170, &ground, SCREEN_SIZE); // ground
 
 	App->renderer->Blit(graphics, -10, 0, &background, SCREEN_SIZE); // background
-	App->renderer->Blit(animation, 182, 56, &(mountains.GetCurrentFrame(true)), SCREEN_SIZE); // mountain animation
-	App->renderer->Blit(animation, 405, 56, &(face.GetCurrentFrame(true)), SCREEN_SIZE); // face animation
+	App->renderer->Blit(animation, 182, 56, &(mountains.GetCurrentFrame()), SCREEN_SIZE); // mountain animation
+	App->renderer->Blit(animation, 405, 56, &(face.GetCurrentFrame()), SCREEN_SIZE); // face animation
 
 	App->renderer->Blit(graphics, -60, 0, &roof, SCREEN_SIZE); // roof
 
 	App->renderer->Blit(graphics, 175, 140, &bath, SCREEN_SIZE); // bath
-	App->renderer->Blit(graphics, 203, 152, &(water.GetCurrentFrame(true)), SCREEN_SIZE); // water animation
+	App->renderer->Blit(graphics, 203, 152, &(water.GetCurrentFrame()), SCREEN_SIZE); // water animation
 
 	App->renderer->Blit(graphics, 90, 165, &barrel, SCREEN_SIZE); // barrel
 

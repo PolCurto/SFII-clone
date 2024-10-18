@@ -2,7 +2,7 @@
 #define __MODULECHARACTER_H__
 
 #include "Module.h"
-#include "Animation.h"
+#include "Animator.h"
 #include "Globals.h"
 #include "Point.h"
 
@@ -38,11 +38,7 @@ public:
 
 public:
 	SDL_Texture* graphics = nullptr;
-	Animation idle;
-	Animation backward;
-	Animation forward;
-	Animation light_punch;
-	Animation medium_punch;
+	Animator animator;
 	iPoint position;
 	int positionLimit;
 

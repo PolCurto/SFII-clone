@@ -11,13 +11,18 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 {
 
 	// idle animation (arcade sprite sheet)
+	Animation idle;
 	idle.frames.push_back({ 9, 13, 97, 95 });
 	idle.frames.push_back({ 115, 12, 96, 96 });
 	idle.frames.push_back({ 218, 10, 95, 98 });
 	idle.frames.push_back({ 115, 12, 96, 96 });
 	idle.speed = 0.04f;
+	idle.loop = true;
+
+	animator.AddAnimation("idle", idle);
 
 	// walk backward animation (arcade sprite sheet)
+	Animation backward;
 	backward.frames.push_back({ 5, 124, 96, 90 });
 	backward.frames.push_back({ 118, 128, 78, 90 });
 	backward.frames.push_back({ 215, 132, 78, 76 });
@@ -27,8 +32,12 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	backward.frames.push_back({ 620, 132, 78, 81 });
 	backward.frames.push_back({ 720, 128, 72, 86 });
 	backward.speed = 0.05f;
+	backward.loop = true;
+
+	animator.AddAnimation("walk_b", backward);
 
 	// walk forward animation
+	Animation forward;
 	forward.frames.push_back({ 335, 31, 82, 72 });
 	forward.frames.push_back({ 440, 34, 78, 68 });
 	forward.frames.push_back({ 542, 30, 77, 77 });
@@ -38,20 +47,32 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	forward.frames.push_back({ 945, 31, 85, 76 });
 	forward.frames.push_back({ 1033, 26, 99, 77 });
 	forward.speed = 0.05f;
+	forward.loop = true;
+
+	animator.AddAnimation("walk_f", forward);
 
 	// Light punch animation
+	Animation light_punch;
 	light_punch.frames.push_back({ 11, 436, 97, 94 });
 	light_punch.frames.push_back({ 121, 433, 135, 97 });
 	light_punch.frames.push_back({ 268, 433, 109, 97 });
 	light_punch.speed = 0.05f;
+	light_punch.loop = false;
+
+	animator.AddAnimation("light_punch", light_punch);
 
 	// Light kick punch animation
+	Animation medium_punch;
 	medium_punch.frames.push_back({ 10, 730, 81, 97 });
 	medium_punch.frames.push_back({ 105, 732, 97, 95 });
 	medium_punch.frames.push_back({ 219, 733, 137, 95 });
 	medium_punch.speed = 0.05f;
+	medium_punch.loop = false;
 
-	// Hadouken animation
+	animator.AddAnimation("medium_punch", medium_punch);
+
+	// Set default animation
+	animator.SetDefaultAnimation("idle");
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -112,33 +133,33 @@ void ModuleEnemy::DrawToScreen()
 	switch (state)
 	{
 	case IDLE:
-		currentFrame = idle.GetCurrentFrame(true);
+		currentFrame = animator.AnimateAction("idle");
 		break;
 	case MOVEMENT:
 		if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
 		{
-			currentFrame = forward.GetCurrentFrame(true);
+			currentFrame = animator.AnimateAction("walk_f");
 		}
 		else
 		{
-			currentFrame = backward.GetCurrentFrame(true);
+			currentFrame = animator.AnimateAction("walk_b");
 		}
 		break;
 	case COMBAT:
 		switch (attackState)
 		{
 		case L_PUNCH:
-			currentFrame = light_punch.GetCurrentFrame(false);
-			if (light_punch.finished) state = IDLE;
+			currentFrame = animator.AnimateAction("light_punch");
+			if (animator.AnimationFinished()) state = IDLE;
 			break;
 		case M_PUNCH:
-			currentFrame = medium_punch.GetCurrentFrame(false);
-			if (light_punch.finished) state = IDLE;
+			currentFrame = animator.AnimateAction("medium_punch");
+			if (animator.AnimationFinished()) state = IDLE;
 			break;
 		}
 		break;
 	default:
-		currentFrame = idle.GetCurrentFrame(true);
+		currentFrame = animator.AnimateAction("idle");
 		break;
 	}
 

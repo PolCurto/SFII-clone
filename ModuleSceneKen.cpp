@@ -96,13 +96,13 @@ update_status ModuleSceneKen::Update()
 	// Draw everything --------------------------------------
 	// TODO 1: Tweak the movement speed of the sea&sky + flag to your taste -- Done
 	App->renderer->Blit(graphics, 0, 0, &background, 2.0f); // sea and sky
-	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame(true)), 2.0f); // flag animation
+	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 2.0f); // flag animation
 
 	// TODO 3: Draw the ship. Be sure to tweak the speed.
-	App->renderer->Blit(graphics, 0, (int)-ship_y, &red_ship, 3.0f); // red ship
+	App->renderer->Blit(graphics, 0, (int)-ship_y, &red_ship, 2.5f); // red ship
 
 	// TODO 6: Draw the girl. Make sure it follows the ship movement!
-	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame(true)), 3.0f);
+	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame()), 3.0f);
 	
 	App->renderer->Blit(graphics, 0, 170, &ground, SCREEN_SIZE);
 

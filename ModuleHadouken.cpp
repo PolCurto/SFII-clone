@@ -18,6 +18,7 @@ ModuleHadouken::ModuleHadouken(bool start_enabled) : Module(start_enabled)
 	despawn.frames.push_back({ 652, 1566, 15, 25 });
 	despawn.frames.push_back({ 677, 1565, 28, 28 });
 	despawn.speed = 0.05f;
+	despawn.loop = false;
 }
 
 ModuleHadouken::~ModuleHadouken()
@@ -73,7 +74,7 @@ void ModuleHadouken::Move()
 void ModuleHadouken::Despawn()
 {
 	//LOG("HADOUKEN DESPAWN");
-	App->renderer->Blit(graphics, position.x, position.y, &(despawn.GetCurrentFrame(false)), SCREEN_SIZE, isFlipped);
+	App->renderer->Blit(graphics, position.x, position.y, &(despawn.GetCurrentFrame()), SCREEN_SIZE, isFlipped);
 	finished = despawn.finished;
 }
 
