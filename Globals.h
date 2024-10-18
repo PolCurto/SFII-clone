@@ -40,6 +40,6 @@ enum update_status
 #define SCREEN_SIZE 3
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Super Awesome Game"
+#define TITLE "Street Fighter II"
 
 #endif //__GLOBALS_H__

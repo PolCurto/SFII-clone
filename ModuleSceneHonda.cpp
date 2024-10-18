@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneHonda.h"
-#include "ModuleSceneKen.h"
+#include "ModuleStageSelector.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
@@ -121,7 +121,7 @@ update_status ModuleSceneHonda::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		// Switch too ken module
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, 3.0f);
+		App->fade->FadeToBlack(App->stage_selector, App->scene_honda, 3.0f);
 	}
 
 	return UPDATE_CONTINUE;

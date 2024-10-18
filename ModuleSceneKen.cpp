@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneKen.h"
-#include "ModuleSceneHonda.h"
+#include "ModuleStageSelector.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModulePlayer.h"
@@ -113,7 +113,7 @@ update_status ModuleSceneKen::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		// Switch too honda module
-		App->fade->FadeToBlack(App->scene_honda, App->scene_ken, 3.0f);
+		App->fade->FadeToBlack(App->stage_selector, App->scene_ken, 3.0f);
 	}
 
 	SetCharactersLimit();

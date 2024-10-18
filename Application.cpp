@@ -7,6 +7,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneKen.h"
 #include "ModuleSceneHonda.h"
+#include "ModuleStageSelector.h"
 #include "ModulePlayer.h"
 #include "ModuleEnemy.h"
 
@@ -23,6 +24,7 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
+	modules.push_back(stage_selector = new ModuleStageSelector(false));
 	modules.push_back(scene_ken = new ModuleSceneKen(false));
 	modules.push_back(scene_honda = new ModuleSceneHonda(false));
 	modules.push_back(player = new ModulePlayer(false));
@@ -51,7 +53,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(scene_ken, nullptr, 3.0f);
+	fade->FadeToBlack(stage_selector, nullptr, 3.0f);
 
 	return ret;
 }

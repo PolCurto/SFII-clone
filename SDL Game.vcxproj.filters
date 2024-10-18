@@ -73,6 +73,9 @@
     <ClInclude Include="Animator.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleStageSelector.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -118,6 +121,9 @@
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleHadouken.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleStageSelector.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>

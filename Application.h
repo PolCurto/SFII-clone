@@ -15,6 +15,7 @@ class ModulePlayer;
 class ModuleEnemy;
 class ModuleSceneKen;
 class ModuleSceneHonda;
+class ModuleStageSelector;
 class ModuleHadouken;
 
 class Application
@@ -39,6 +40,7 @@ public:
 	ModuleEnemy* enemy;
 	ModuleSceneKen* scene_ken;
 	ModuleSceneHonda* scene_honda;
+	ModuleStageSelector* stage_selector;
 	ModuleHadouken* hadouken;
 
 private:
