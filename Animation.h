@@ -21,7 +21,7 @@ public:
 	SDL_Rect& GetCurrentFrame()
 	{
 		// If the animation has finished stops increasing the frame number
-		if (!finished) current_frame += speed;
+		if (!finished) current_frame += speed * App->delta;
 
 		if (current_frame >= frames.size())
 		{

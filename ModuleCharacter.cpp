@@ -27,7 +27,7 @@ update_status ModuleCharacter::Update()
 
 void ModuleCharacter::Move()
 {
-	position.x += (int)speed;
+	position.x += int(speed * App->delta);
 
 	if (position.x < minPositionLimit) position.x = minPositionLimit;
 	if (position.x > maxPositionLimit) position.x = maxPositionLimit;

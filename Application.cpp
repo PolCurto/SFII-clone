@@ -66,8 +66,8 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	
 	current_time = std::chrono::steady_clock::now();
-	delta = current_time - last_time;
-	LOG("first: %f", delta);
+	time_lapse = (current_time - last_time);
+	delta = time_lapse.count();
 	last_time = std::chrono::steady_clock::now();
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
@@ -81,21 +81,6 @@ update_status Application::Update()
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PostUpdate();
-	
-	/*
-	auto currentTime = std::chrono::high_resolution_clock::now();
-
-	// Calculate the frame duration (time between frames)
-	std::chrono::duration<double> delta = currentFrameTime - previousFrameTime;
-	frameDuration = delta.count();
-
-	// Output the frame duration in seconds
-	std::cout << "Frame duration: " << frameDuration << " seconds" << std::endl;
-
-	// Update previous frame time for the next loop
-	previousFrameTime = currentFrameTime;
-	*/
-
 
 	return ret;
 }

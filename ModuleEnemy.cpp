@@ -16,7 +16,7 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	idle.frames.push_back({ 115, 12, 96, 96 });
 	idle.frames.push_back({ 218, 10, 95, 98 });
 	idle.frames.push_back({ 115, 12, 96, 96 });
-	idle.speed = 0.04f;
+	idle.speed = 0.08f;
 	idle.loop = true;
 
 	animator.AddAnimation("idle", idle);
@@ -31,7 +31,7 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	backward.frames.push_back({ 518, 125, 79, 93 });
 	backward.frames.push_back({ 620, 132, 78, 81 });
 	backward.frames.push_back({ 720, 128, 72, 86 });
-	backward.speed = 0.05f;
+	backward.speed = 0.1f;
 	backward.loop = true;
 
 	animator.AddAnimation("walk_b", backward);
@@ -46,7 +46,7 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	forward.frames.push_back({ 852, 34, 79, 73 });
 	forward.frames.push_back({ 945, 31, 85, 76 });
 	forward.frames.push_back({ 1033, 26, 99, 77 });
-	forward.speed = 0.05f;
+	forward.speed = 0.1f;
 	forward.loop = true;
 
 	animator.AddAnimation("walk_f", forward);
@@ -56,7 +56,7 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	light_punch.frames.push_back({ 11, 436, 97, 94 });
 	light_punch.frames.push_back({ 121, 433, 135, 97 });
 	light_punch.frames.push_back({ 268, 433, 109, 97 });
-	light_punch.speed = 0.05f;
+	light_punch.speed = 0.08f;
 	light_punch.loop = false;
 
 	animator.AddAnimation("light_punch", light_punch);
@@ -66,7 +66,7 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	medium_punch.frames.push_back({ 10, 730, 81, 97 });
 	medium_punch.frames.push_back({ 105, 732, 97, 95 });
 	medium_punch.frames.push_back({ 219, 733, 137, 95 });
-	medium_punch.speed = 0.05f;
+	medium_punch.speed = 0.08f;
 	medium_punch.loop = false;
 
 	animator.AddAnimation("medium_punch", medium_punch);
@@ -181,14 +181,14 @@ void ModuleEnemy::DoSomething()
 			// Walk forward
 			LOG("WALK FOERWARD");
 			state = MOVEMENT;
-			speed = 1.0f;
+			speed = 3.0f;
 		}
 		else if (random < 40)
 		{
 			LOG("WALK BACK");
 			// Walk backwards
 			state = MOVEMENT;
-			speed = -1.0f;
+			speed = -3.0f;
 		}
 		else if (random < 60)
 		{

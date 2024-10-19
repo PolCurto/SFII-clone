@@ -44,13 +44,15 @@ public:
 	ModuleStageSelector* stage_selector;
 	ModuleHadouken* hadouken;
 
-	std::chrono::duration<double, std::milli> delta;
+	double delta;
 
 private:
 
 	std::list<Module*> modules;
 	std::chrono::steady_clock::time_point current_time;
 	std::chrono::steady_clock::time_point last_time;
+	std::chrono::duration<double, std::centi> time_lapse;
+
 };
 
 extern Application* App;
