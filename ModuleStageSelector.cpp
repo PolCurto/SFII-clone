@@ -34,7 +34,7 @@ bool ModuleStageSelector::Start()
 	graphics = App->textures->Load("ken_stage.png");
 
 	// TODO 0: trigger background music
-	App->audio->PlayMusic("ken.ogg");
+	App->audio->PlayMusic("stage_select.ogg");
 
 	return true;
 }

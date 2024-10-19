@@ -66,7 +66,7 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	
 	current_time = std::chrono::steady_clock::now();
-	time_lapse = (current_time - last_time);
+	time_lapse = (current_time - last_time) / 1000;
 	delta = time_lapse.count();
 	last_time = std::chrono::steady_clock::now();
 

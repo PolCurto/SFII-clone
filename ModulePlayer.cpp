@@ -17,7 +17,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	idle.frames.push_back({184, 14, 60, 90});
 	idle.frames.push_back({276, 11, 60, 93});
 	idle.frames.push_back({366, 12, 60, 92});
-	idle.speed = 0.1f;
+	idle.speed = 10.0f;
 	idle.loop = true;
 
 	animator.AddAnimation("idle", idle);
@@ -30,7 +30,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	backward.frames.push_back({797, 127, 57, 90});
 	backward.frames.push_back({883, 128, 58, 91});
 	backward.frames.push_back({974, 129, 57, 89});
-	backward.speed = 0.12f;
+	backward.speed = 12.0f;
 	backward.loop = true;
 
 	animator.AddAnimation("walk_b", backward);
@@ -43,7 +43,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	forward.frames.push_back({ 259, 128, 63, 90 });
 	forward.frames.push_back({ 352, 128, 54, 91 });
 	forward.frames.push_back({ 432, 131, 50, 89 });
-	forward.speed = 0.12f;
+	forward.speed = 12.0f;
 	forward.loop = true;
 
 	animator.AddAnimation("walk_f", forward);
@@ -54,7 +54,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	light_punch.frames.push_back({ 19, 272, 64, 91 });
 	light_punch.frames.push_back({ 108, 272, 92, 91 });
 	light_punch.frames.push_back({ 19, 272, 64, 91 });
-	light_punch.speed = 0.1f;
+	light_punch.speed = 10.0f;
 	light_punch.loop = false;
 
 	animator.AddAnimation("light_punch", light_punch);
@@ -66,7 +66,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	medium_punch.frames.push_back({ 432, 268, 108, 92 });
 	medium_punch.frames.push_back({ 333, 268, 66, 93 });
 	medium_punch.frames.push_back({ 253, 269, 60, 94 });
-	medium_punch.speed = 0.08f;
+	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
 
 	animator.AddAnimation("medium_punch", medium_punch);
@@ -77,7 +77,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	hadouken_anim.frames.push_back({ 135, 1551, 85, 86 });
 	hadouken_anim.frames.push_back({ 244, 1552, 90, 87 });
 	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
-	hadouken_anim.speed = 0.1f;
+	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
 
 	animator.AddAnimation("hadouken", hadouken_anim);
@@ -154,13 +154,13 @@ void ModulePlayer::CheckPlayerInputs()
 		// Right movement
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			speed = 3.0f;
+			speed = 300.0f;
 			state = MOVEMENT;
 		}
 		// Left Movement
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			speed = -3.0f;
+			speed = -300.0f;
 			state = MOVEMENT;
 		}
 		else
