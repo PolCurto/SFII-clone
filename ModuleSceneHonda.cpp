@@ -50,17 +50,17 @@ ModuleSceneHonda::ModuleSceneHonda(bool start_enabled) : Module(start_enabled)
 	water.frames.push_back({ 296, 448, 284, 12 });
 	water.frames.push_back({ 8, 448, 284, 18 });
 	water.frames.push_back({ 296, 448, 284, 12 });
-	water.speed = 0.06f;
+	water.speed = 6.0f;
 
 	// Mountains animation
 	mountains.frames.push_back({ 224, 64, 224, 104 });
 	mountains.frames.push_back({ 456, 64, 224, 104 });
-	mountains.speed = 0.02f;
+	mountains.speed = 2.0f;
 
 	// Face animation
 	face.frames.push_back({ 688, 64, 95, 104 });
 	face.frames.push_back({ 790, 64, 95, 104 });
-	face.speed = 0.02f;
+	face.speed = 2.0f;
 	
 
 }

@@ -181,14 +181,14 @@ void ModuleEnemy::DoSomething()
 			// Walk forward
 			LOG("WALK FOERWARD");
 			state = MOVEMENT;
-			speed = 300.0f;
+			speed = 1.0f;
 		}
 		else if (random < 40)
 		{
 			LOG("WALK BACK");
 			// Walk backwards
 			state = MOVEMENT;
-			speed = -300.0f;
+			speed = -1.0f;
 		}
 		else if (random < 60)
 		{

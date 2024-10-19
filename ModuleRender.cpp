@@ -51,11 +51,19 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	// debug camera
-	int speed = 1;
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) debugCamera = !debugCamera;
 
+	
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleRender::PostUpdate()
+{
+	// debug camera
+	int speed = 1;
 	if (debugCamera)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -75,11 +83,6 @@ update_status ModuleRender::Update()
 		CamFollowPlayer();
 	}
 
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleRender::PostUpdate()
-{
 	SDL_RenderPresent(renderer);
 	return UPDATE_CONTINUE;
 }

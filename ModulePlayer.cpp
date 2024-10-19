@@ -77,7 +77,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	hadouken_anim.frames.push_back({ 135, 1551, 85, 86 });
 	hadouken_anim.frames.push_back({ 244, 1552, 90, 87 });
 	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
-	hadouken_anim.speed = 10.0f;
+	hadouken_anim.speed = 12.0f;
 	hadouken_anim.loop = false;
 
 	animator.AddAnimation("hadouken", hadouken_anim);
@@ -154,13 +154,13 @@ void ModulePlayer::CheckPlayerInputs()
 		// Right movement
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			speed = 300.0f;
+			speed = 1.0f;
 			state = MOVEMENT;
 		}
 		// Left Movement
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			speed = -300.0f;
+			speed = -1.0f;
 			state = MOVEMENT;
 		}
 		else
