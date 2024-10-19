@@ -24,6 +24,7 @@ public:
 	void CheckPlayerInputs();
 	void DrawToScreen();
 
+	void Hit(iPoint position, int area) override;
 	void ThrowHadouken();
 
 private:

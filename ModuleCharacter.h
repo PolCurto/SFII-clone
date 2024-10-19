@@ -37,6 +37,7 @@ public:
 
 	virtual void Move();
 	virtual void SetPositionLimits(int min, int max);
+	virtual void Hit(iPoint position, int area) {}
 
 public:
 	SDL_Texture* graphics = nullptr;
@@ -52,6 +53,8 @@ protected:
 	AttackState attackState;
 	bool isFlipped;
 	Hitbox punch_box;
+
+	SDL_Rect debugRect;
 };
 
 #endif // __MODULECHARACTER_H__

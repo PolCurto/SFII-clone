@@ -77,6 +77,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	hadouken_anim.frames.push_back({ 135, 1551, 85, 86 });
 	hadouken_anim.frames.push_back({ 244, 1552, 90, 87 });
 	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
+	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
 	hadouken_anim.speed = 12.0f;
 	hadouken_anim.loop = false;
 
@@ -86,6 +87,8 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 	animator.SetDefaultAnimation("idle");
 
 	hitbox.parent = this;
+
+	debugRect = { 1061, 2457, 20, 20 };
 
 }
 
@@ -221,6 +224,10 @@ void ModulePlayer::DrawToScreen()
 		{
 			case L_PUNCH:
 				currentFrame = animator.AnimateAction("light_punch");
+				if (animator.GetCurrentFrameNum() == 1)
+				{
+					isFlipped ? Hit({ position.x - 60, position.y - 70 }, 10) : Hit({ position.x + 60, position.y - 70 }, 10);
+				}
 				if (animator.AnimationFinished()) state = IDLE;
 				break;
 			case M_PUNCH:
@@ -246,10 +253,24 @@ void ModulePlayer::DrawToScreen()
 	//App->renderer->Blit(graphics, position.x - 20, position.y - 85, &hitbox.area, SCREEN_SIZE);
 }
 
+void ModulePlayer::Hit(iPoint position, int area)
+{
+	punch_box.area.x = position.x - (area / 2);
+	punch_box.area.y = position.y - (area / 2);
+	punch_box.area.w = punch_box.area.h = area;
+
+	debugRect.w = debugRect.h = area;
+
+	if (punch_box.IsColliding(App->enemy->hitbox))
+	{
+		LOG("COLLIDING");
+	}
+
+	App->renderer->Blit(graphics, punch_box.area.x, punch_box.area.y, &debugRect, SCREEN_SIZE);
+}
+
 void ModulePlayer::ThrowHadouken()
 {
 	hadouken->isFlipped = isFlipped;
 	hadouken->Enable();
 }
-
-

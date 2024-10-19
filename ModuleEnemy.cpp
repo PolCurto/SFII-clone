@@ -75,7 +75,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	animator.SetDefaultAnimation("idle");
 
 	// Set the hitbox parameters
-	hitbox.area = { position.x - 20, position.y, 20, 60 };
 	hitbox.parent = this;
 }
 
@@ -128,6 +127,8 @@ void ModuleEnemy::Move()
 	{
 		isFlipped = true;
 	}
+
+	hitbox.area = { position.x - 25, position.y - 85, 50, 80 };
 }
 
 void ModuleEnemy::DrawToScreen()
@@ -169,6 +170,9 @@ void ModuleEnemy::DrawToScreen()
 
 	// Speed of 3 to match the camera speed, don't really know why
 	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+
+	//Hitbox Debug
+	//App->renderer->Blit(graphics, position.x - 25, position.y - 85, &hitbox.area, SCREEN_SIZE);
 }
 
 void ModuleEnemy::DoSomething()
@@ -183,28 +187,28 @@ void ModuleEnemy::DoSomething()
 		if (random < 20)
 		{
 			// Walk forward
-			LOG("WALK FOERWARD");
+			//LOG("WALK FOERWARD");
 			state = MOVEMENT;
 			speed = 1.0f;
 		}
 		else if (random < 40)
 		{
-			LOG("WALK BACK");
 			// Walk backwards
+			//LOG("WALK BACK");
 			state = MOVEMENT;
 			speed = -1.0f;
 		}
 		else if (random < 60)
 		{
 			// Idle
-			LOG("IDLE");
+			//LOG("IDLE");
 			speed = 0;
 			state = IDLE;
 		}
 		else if (random < 80)
 		{
 			//Light punch
-			LOG("LIGHT PUNCH");
+			//LOG("LIGHT PUNCH");
 			speed = 0;
 			state = COMBAT;
 			attackState = L_PUNCH;
@@ -212,7 +216,7 @@ void ModuleEnemy::DoSomething()
 		else
 		{
 			//Light kick
-			LOG("LIGHT KICK");
+			//LOG("LIGHT KICK");
 			speed = 0;
 			state = COMBAT;
 			attackState = M_PUNCH;

@@ -9,14 +9,14 @@ class Hitbox
 {
 public:
 	SDL_Rect area;
-	Module* parent;
+	Module parent;
 
 public:
 	Hitbox() : area({0, 0, 0, 0}), parent(nullptr)
 	{}
 
-	bool IsColliding(const SDL_Rect& other_hitbox) const
+	bool IsColliding(const Hitbox& other_hitbox) const
 	{
-		return SDL_HasIntersection(&area, &other_hitbox);
+		return SDL_HasIntersection(&area, &other_hitbox.area);
 	}
 };
