@@ -5,6 +5,7 @@
 #include "Animator.h"
 #include "Globals.h"
 #include "Point.h"
+#include "Hitbox.h"
 
 struct SDL_Texture;
 class ModuleEnemy;
@@ -43,12 +44,14 @@ public:
 	iPoint position;
 	int maxPositionLimit;
 	int minPositionLimit;
+	Hitbox hitbox;
 
 protected:
 	float speed = 0.0f;
 	CharacterState state;
 	AttackState attackState;
 	bool isFlipped;
+	Hitbox punch_box;
 };
 
 #endif // __MODULECHARACTER_H__

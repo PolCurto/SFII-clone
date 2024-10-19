@@ -84,6 +84,9 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Set the starting animation;
 	animator.SetDefaultAnimation("idle");
+
+	hitbox.parent = this;
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -145,6 +148,10 @@ void ModulePlayer::Move()
 	{
 		isFlipped = true;
 	}
+
+	hitbox.area = { position.x - 20, position.y - 85, 40, 80 };
+
+	//LOG("Hitbox x1: %d, x2: %d, y1: %d, y2: %d", hitbox.area.x, hitbox.area.x + hitbox.area.w, hitbox.area.y, hitbox.area.y + hitbox.area.h);
 }
 
 void ModulePlayer::CheckPlayerInputs()
@@ -188,8 +195,6 @@ void ModulePlayer::CheckPlayerInputs()
 		state = COMBAT;
 		attackState = HADOUKEN;
 	}
-
-	LOG("SPEED: %d", int(speed * App->delta));
 }
 
 void ModulePlayer::DrawToScreen()
@@ -236,6 +241,9 @@ void ModulePlayer::DrawToScreen()
 
 	// Speed of 3 to match the camera speed, don't really know why
 	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+
+	// Debug hitbox
+	//App->renderer->Blit(graphics, position.x - 20, position.y - 85, &hitbox.area, SCREEN_SIZE);
 }
 
 void ModulePlayer::ThrowHadouken()

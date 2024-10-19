@@ -73,6 +73,10 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Set default animation
 	animator.SetDefaultAnimation("idle");
+
+	// Set the hitbox parameters
+	hitbox.area = { position.x - 20, position.y, 20, 60 };
+	hitbox.parent = this;
 }
 
 ModuleEnemy::~ModuleEnemy()
