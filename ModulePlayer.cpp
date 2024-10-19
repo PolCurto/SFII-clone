@@ -51,9 +51,9 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Light punch animation
 	Animation light_punch;
-	light_punch.frames.push_back({ 19, 272, 64, 91 });
-	light_punch.frames.push_back({ 108, 272, 92, 91 });
-	light_punch.frames.push_back({ 19, 272, 64, 91 });
+	light_punch.frames.push_back({ 13, 272, 70, 91 });
+	light_punch.frames.push_back({ 98, 272, 126, 91 });
+	light_punch.frames.push_back({ 13, 272, 70, 91 });
 	light_punch.speed = 10.0f;
 	light_punch.loop = false;
 
@@ -61,11 +61,11 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Medium punch animation
 	Animation medium_punch;
-	medium_punch.frames.push_back({ 253, 269, 60, 94 });
-	medium_punch.frames.push_back({ 333, 268, 66, 93 });
-	medium_punch.frames.push_back({ 432, 268, 108, 92 });
-	medium_punch.frames.push_back({ 333, 268, 66, 93 });
-	medium_punch.frames.push_back({ 253, 269, 60, 94 });
+	medium_punch.frames.push_back({ 283, 269, 138, 94 });
+	medium_punch.frames.push_back({ 453, 268, 138, 93 });
+	medium_punch.frames.push_back({ 611, 268, 138, 92 });
+	medium_punch.frames.push_back({ 453, 268, 138, 93 });
+	medium_punch.frames.push_back({ 283, 269, 138, 94 });
 	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
 
@@ -73,15 +73,27 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Hadouken animation
 	Animation hadouken_anim;
-	hadouken_anim.frames.push_back({ 34, 1545, 74, 90 });
-	hadouken_anim.frames.push_back({ 135, 1551, 85, 86 });
-	hadouken_anim.frames.push_back({ 244, 1552, 90, 87 });
-	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
-	hadouken_anim.frames.push_back({ 357, 1558, 105, 77 });
-	hadouken_anim.speed = 12.0f;
+	hadouken_anim.frames.push_back({ 18, 1545, 90, 90 });
+	hadouken_anim.frames.push_back({ 176, 1551, 116, 86 });
+	hadouken_anim.frames.push_back({ 379, 1552, 102, 87 });
+	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
+	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
+	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
 
 	animator.AddAnimation("hadouken", hadouken_anim);
+
+
+	// Victory animation
+	Animation victory;
+	victory.frames.push_back({ 500, 2479, 42, 83 });
+	victory.frames.push_back({ 577, 2474, 56, 88 });
+	victory.frames.push_back({ 660, 2465, 60, 97 });
+	victory.frames.push_back({ 745, 2440, 55, 122 });
+	victory.speed = 6.0f;
+	victory.loop = false;
+
+	animator.AddAnimation("victory", victory);
 
 	// Set the starting animation;
 	animator.SetDefaultAnimation("idle");
@@ -142,14 +154,17 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::Move()
 {
+	if (state == DEAD || state == VICTORY) return;
+
 	ModuleCharacter::Move();
+
 	if (App->enemy->position.x > position.x)
 	{
-		isFlipped = false;
+		is_flipped = false;
 	}
 	else
 	{
-		isFlipped = true;
+		is_flipped = true;
 	}
 
 	hitbox.area = { position.x - 20, position.y - 85, 40, 80 };
@@ -159,6 +174,8 @@ void ModulePlayer::Move()
 
 void ModulePlayer::CheckPlayerInputs()
 {
+	if (state == DEAD || state == VICTORY) return;
+
 	if (state != COMBAT)
 	{
 		// Right movement
@@ -210,7 +227,7 @@ void ModulePlayer::DrawToScreen()
 		currentFrame = animator.AnimateAction("idle");
 		break;
 	case MOVEMENT:
-		if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
+		if (speed > 0.0f && !is_flipped || speed < 0.0 && is_flipped)
 		{
 			currentFrame = animator.AnimateAction("walk_f");
 		}
@@ -226,7 +243,7 @@ void ModulePlayer::DrawToScreen()
 				currentFrame = animator.AnimateAction("light_punch");
 				if (animator.GetCurrentFrameNum() == 1)
 				{
-					isFlipped ? Hit({ position.x - 60, position.y - 70 }, 10) : Hit({ position.x + 60, position.y - 70 }, 10);
+					is_flipped ? Hit({ position.x - 60, position.y - 70 }, 10) : Hit({ position.x + 60, position.y - 70 }, 10);
 				}
 				if (animator.AnimationFinished()) state = IDLE;
 				break;
@@ -241,13 +258,16 @@ void ModulePlayer::DrawToScreen()
 				break;
 		}
 		break;
+	case VICTORY:
+		currentFrame = animator.AnimateAction("victory");
+		break;
 	default:
 		currentFrame = animator.AnimateAction("idle");
 		break;
 	}
 
 	// Speed of 3 to match the camera speed, don't really know why
-	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, is_flipped);
 
 	// Debug hitbox
 	//App->renderer->Blit(graphics, position.x - 20, position.y - 85, &hitbox.area, SCREEN_SIZE);
@@ -263,7 +283,7 @@ void ModulePlayer::Hit(iPoint position, int area)
 
 	if (punch_box.IsColliding(App->enemy->hitbox))
 	{
-		LOG("COLLIDING");
+		App->enemy->TakeDamage(1);
 	}
 
 	App->renderer->Blit(graphics, punch_box.area.x, punch_box.area.y, &debugRect, SCREEN_SIZE);
@@ -271,6 +291,6 @@ void ModulePlayer::Hit(iPoint position, int area)
 
 void ModulePlayer::ThrowHadouken()
 {
-	hadouken->isFlipped = isFlipped;
+	hadouken->isFlipped = is_flipped;
 	hadouken->Enable();
 }

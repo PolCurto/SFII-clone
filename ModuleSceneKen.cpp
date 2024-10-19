@@ -57,6 +57,8 @@ ModuleSceneKen::~ModuleSceneKen()
 bool ModuleSceneKen::Start()
 {
 	LOG("Loading ken scene");
+
+	is_fading = false;
 	
 	graphics = App->textures->Load("ken_stage.png");
 
@@ -118,6 +120,29 @@ update_status ModuleSceneKen::Update()
 	}
 
 	SetCharactersLimit();
+
+	// Check if any of the players wins
+	if (!App->player->is_alive)
+	{
+		// Enemy victory animation
+	}
+	else if (!App->enemy->is_alive)
+	{
+		end_timer += App->delta;
+		LOG("End timer: %f", end_timer);
+
+		if (end_timer > 0.5f)
+		{
+			App->player->WinMatch();
+		}
+
+		if (!is_fading && end_timer > 3.0f)
+		{
+			is_fading = true;
+			App->fade->FadeToBlack(App->stage_selector, App->scene_ken, 3.0f);
+		}
+	}
+	// TODO: Fade to black after a few seconds after ending the match
 
 	return UPDATE_CONTINUE;
 }

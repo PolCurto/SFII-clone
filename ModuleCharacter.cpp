@@ -12,7 +12,7 @@ ModuleCharacter::ModuleCharacter(bool start_enabled) : Module(start_enabled)
 	maxPositionLimit = 500;
 	state = IDLE;
 	attackState = NO_ATTACK;
-	isFlipped = false;
+	is_flipped = false;
 }
 
 ModuleCharacter::~ModuleCharacter()
@@ -27,6 +27,8 @@ update_status ModuleCharacter::Update()
 
 void ModuleCharacter::Move()
 {
+	if (state == DEAD || state == VICTORY) return;
+
 	position.x += speed;
 
 	if (position.x < minPositionLimit) position.x = minPositionLimit;
@@ -37,5 +39,20 @@ void ModuleCharacter::SetPositionLimits(int min, int max)
 {
 	minPositionLimit = min + 30;
 	maxPositionLimit = max - 30;
+}
+
+void ModuleCharacter::TakeDamage(int damage)
+{
+	if (is_hurt) return;
+
+	is_hurt = true;
+	life -= damage;
+	if (life > 0) state = HURT;
+	else state = DEAD;
+}
+
+void ModuleCharacter::WinMatch()
+{
+	state = VICTORY;
 }
 

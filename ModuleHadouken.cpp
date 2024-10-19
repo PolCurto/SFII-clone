@@ -8,16 +8,14 @@
 
 ModuleHadouken::ModuleHadouken(bool start_enabled) : Module(start_enabled)
 {
-	sprite.x = 493;
+	sprite.x = 819;
 	sprite.y = 1563;
 	sprite.w = 43;
 	sprite.h = 32;
-
-	despawn.frames.push_back({ 550, 1565, 56, 27 });
-	despawn.frames.push_back({ 614, 1569, 26, 20 });
-	despawn.frames.push_back({ 652, 1566, 15, 25 });
-	despawn.frames.push_back({ 677, 1565, 28, 28 });
-	despawn.speed = 0.05f;
+	
+	despawn.frames.push_back({ 1023, 1565, 28, 28 });
+	despawn.frames.push_back({ 1079, 1565, 28, 27 });
+	despawn.speed = 14.0f;
 	despawn.loop = false;
 }
 
@@ -30,12 +28,13 @@ bool ModuleHadouken::Start()
 	timer = 0.0f;
 	finished = false;
 
-	if (isFlipped) position.x = App->player->position.x - 40;
-	else position.x = App->player->position.x + 100;
+	if (isFlipped) position.x = App->player->position.x - 70;
+	else position.x = App->player->position.x + 70;
 
 	position.y = App->player->position.y - 75;
 
 	graphics = App->textures->Load("ryu4.png");
+	despawn.Reset();
 
 	return true;
 }
@@ -50,10 +49,10 @@ bool ModuleHadouken::CleanUp()
 
 update_status ModuleHadouken::Update()
 {
-	Move();
 	if (timer < timeToKill)
 	{
-		//LOG("HADOUKEN MOVE");
+		//LOG("Timer: %f", timer);
+		Move();
 		App->renderer->Blit(graphics, position.x, position.y, &sprite, SCREEN_SIZE, isFlipped);
 		timer += 0.02f;
 	}
@@ -61,7 +60,6 @@ update_status ModuleHadouken::Update()
 	{
 		Despawn();
 	}
-
 	return UPDATE_CONTINUE;
 }
 
@@ -73,7 +71,6 @@ void ModuleHadouken::Move()
 
 void ModuleHadouken::Despawn()
 {
-	//LOG("HADOUKEN DESPAWN");
 	App->renderer->Blit(graphics, position.x, position.y, &(despawn.GetCurrentFrame()), SCREEN_SIZE, isFlipped);
 	finished = despawn.finished;
 }

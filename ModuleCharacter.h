@@ -14,7 +14,10 @@ enum CharacterState
 {
 	IDLE,
 	MOVEMENT,
-	COMBAT
+	COMBAT,
+	HURT,
+	DEAD,
+	VICTORY
 };
 
 enum AttackState
@@ -38,6 +41,8 @@ public:
 	virtual void Move();
 	virtual void SetPositionLimits(int min, int max);
 	virtual void Hit(iPoint position, int area) {}
+	virtual void TakeDamage(int damage);
+	virtual void WinMatch();
 
 public:
 	SDL_Texture* graphics = nullptr;
@@ -46,15 +51,18 @@ public:
 	int maxPositionLimit;
 	int minPositionLimit;
 	Hitbox hitbox;
+	bool is_alive = true;
 
 protected:
 	float speed = 0.0f;
 	CharacterState state;
 	AttackState attackState;
-	bool isFlipped;
+	bool is_flipped;
 	Hitbox punch_box;
 
 	SDL_Rect debugRect;
+	int life = 2;
+	bool is_hurt = false;
 };
 
 #endif // __MODULECHARACTER_H__

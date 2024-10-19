@@ -71,6 +71,29 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	animator.AddAnimation("medium_punch", medium_punch);
 
+	// Get hurt animation
+	Animation get_hurt;
+	get_hurt.frames.push_back({ 448, 1631, 96, 85 });
+	get_hurt.frames.push_back({ 549, 1637, 100, 80 });
+	get_hurt.frames.push_back({ 655, 1644, 106, 72 });
+	get_hurt.frames.push_back({ 767, 1625, 96, 90 });
+	get_hurt.speed = 10.0f;
+	get_hurt.loop = false;
+
+	animator.AddAnimation("get_hurt", get_hurt);
+
+	// Defeat animation
+	Animation die;
+	die.frames.push_back({ 448, 1631, 96, 85 });
+	die.frames.push_back({ 615, 1928, 118, 85 });
+	die.frames.push_back({ 742, 1930, 127, 85 });
+	die.frames.push_back({ 881, 1973, 161, 52 });
+	die.frames.push_back({ 1049, 1992, 177, 39 });
+	die.speed = 8.0f;
+	die.loop = false;
+
+	animator.AddAnimation("die", die);
+
 	// Set default animation
 	animator.SetDefaultAnimation("idle");
 
@@ -118,14 +141,17 @@ update_status ModuleEnemy::Update()
 
 void ModuleEnemy::Move()
 {
+	if (state == DEAD) return;
+
 	ModuleCharacter::Move();
+
 	if (App->player->position.x > position.x)
 	{
-		isFlipped = false;
+		is_flipped = false;
 	}
 	else
 	{
-		isFlipped = true;
+		is_flipped = true;
 	}
 
 	hitbox.area = { position.x - 25, position.y - 85, 50, 80 };
@@ -141,7 +167,7 @@ void ModuleEnemy::DrawToScreen()
 		currentFrame = animator.AnimateAction("idle");
 		break;
 	case MOVEMENT:
-		if (speed > 0.0f && !isFlipped || speed < 0.0 && isFlipped)
+		if (speed > 0.0f && !is_flipped || speed < 0.0 && is_flipped)
 		{
 			currentFrame = animator.AnimateAction("walk_f");
 		}
@@ -163,13 +189,25 @@ void ModuleEnemy::DrawToScreen()
 			break;
 		}
 		break;
+	case HURT:
+		currentFrame = animator.AnimateAction("get_hurt");
+		if (animator.AnimationFinished())
+		{
+			is_hurt = false;
+			state = IDLE;
+		}
+		break;
+	case DEAD:
+		currentFrame = animator.AnimateAction("die");
+		if (animator.AnimationFinished()) is_alive = false;
+		break;
 	default:
 		currentFrame = animator.AnimateAction("idle");
 		break;
 	}
 
 	// Speed of 3 to match the camera speed, don't really know why
-	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
+	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, is_flipped);
 
 	//Hitbox Debug
 	//App->renderer->Blit(graphics, position.x - 25, position.y - 85, &hitbox.area, SCREEN_SIZE);
@@ -177,6 +215,12 @@ void ModuleEnemy::DrawToScreen()
 
 void ModuleEnemy::DoSomething()
 {
+	if (state == HURT || state == DEAD)
+	{
+		speed = 0;
+		return;
+	}
+
 	if (timer > time_to_act)
 	{
 		timer = 0;
