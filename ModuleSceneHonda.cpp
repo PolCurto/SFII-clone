@@ -128,6 +128,8 @@ update_status ModuleSceneHonda::Update()
 		App->fade->FadeToBlack(App->stage_selector, App->scene_honda, 3.0f);
 	}
 
+	SetCharactersLimit();
+
 	if (!match_started && start_timer > 2.0f)
 	{
 		match_started = true;

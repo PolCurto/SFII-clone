@@ -23,6 +23,7 @@ public:
 	void DrawToScreen();
 
 	void DoSomething();
+	void Hit(iPoint position, int area) override;
 
 private: 
 	float timer = 0;

@@ -51,11 +51,7 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	
-
 	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) debugCamera = !debugCamera;
-
-	
 
 	return UPDATE_CONTINUE;
 }

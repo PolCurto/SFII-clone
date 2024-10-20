@@ -41,6 +41,8 @@ void ModuleCharacter::Move()
 {
 	if (state == DEAD || state == VICTORY) return;
 
+	if (state == HURT) speed = 0;
+
 	position.x += speed;
 
 	if (position.x < minPositionLimit) position.x = minPositionLimit;
@@ -56,6 +58,8 @@ void ModuleCharacter::SetPositionLimits(int min, int max)
 void ModuleCharacter::TakeDamage(int damage)
 {
 	if (is_hurt) return;
+
+	LOG("Player take damage");
 
 	is_hurt = true;
 	life -= damage;

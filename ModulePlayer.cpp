@@ -208,7 +208,7 @@ void ModulePlayer::Move()
 
 void ModulePlayer::CheckPlayerInputs()
 {
-	if (!is_enabled || state == DEAD || state == VICTORY || state == START) return;
+	if (!is_enabled || state == DEAD || state == VICTORY || state == START || state == HURT) return;
 
 	if (state != COMBAT)
 	{
@@ -279,14 +279,14 @@ void ModulePlayer::DrawToScreen()
 		{
 			case L_PUNCH:
 				currentFrame = animator.AnimateAction("light_punch");
-				if (animator.GetCurrentFrameNum() == 1)
-				{
-					is_flipped ? Hit({ position.x - 60, position.y - 70 }, 10) : Hit({ position.x + 60, position.y - 70 }, 10);
-				}
+				if (animator.GetCurrentFrameNum() == 1)	
+					is_flipped ? Hit({ position.x - 55, position.y - 73 }, 10) : Hit({ position.x + 55, position.y - 73 }, 15);
 				if (animator.AnimationFinished()) state = IDLE;
 				break;
 			case M_PUNCH:
 				currentFrame = animator.AnimateAction("medium_punch");
+				if (animator.GetCurrentFrameNum() == 2)
+					is_flipped ? Hit({ position.x - 65, position.y - 73 }, 10) : Hit({ position.x + 65, position.y - 73 }, 15);
 				if (animator.AnimationFinished()) state = IDLE;
 				break;
 			case HADOUKEN:

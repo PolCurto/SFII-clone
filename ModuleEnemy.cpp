@@ -51,17 +51,17 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	// Light punch animation
 	Animation light_punch;
 	light_punch.frames.push_back({ 11, 436, 97, 94 });
-	light_punch.frames.push_back({ 121, 433, 135, 97 });
-	light_punch.frames.push_back({ 268, 433, 109, 97 });
+	light_punch.frames.push_back({ 129, 433, 178, 97 });
+	light_punch.frames.push_back({ 348, 433, 120, 97 });
 	light_punch.speed = 8.0f;
 	light_punch.loop = false;
 	animator.AddAnimation("light_punch", light_punch);
 
 	// Light kick punch animation
 	Animation medium_punch;
-	medium_punch.frames.push_back({ 10, 730, 81, 97 });
-	medium_punch.frames.push_back({ 105, 732, 97, 95 });
-	medium_punch.frames.push_back({ 219, 733, 137, 95 });
+	medium_punch.frames.push_back({ 7, 730, 84, 97 });
+	medium_punch.frames.push_back({ 97, 732, 116, 95 });
+	medium_punch.frames.push_back({ 220, 733, 198, 95 });
 	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
 	animator.AddAnimation("medium_punch", medium_punch);
@@ -69,8 +69,8 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	// Victory animation
 	Animation victory;
 	victory.frames.push_back({ 1243, 1913, 94, 113 });
-	victory.frames.push_back({ 1344, 1896, 116, 120 });
-	victory.frames.push_back({ 1489, 1875, 100, 140 });
+	victory.frames.push_back({ 1344, 1896, 116, 130 });
+	victory.frames.push_back({ 1489, 1875, 100, 149 });
 	victory.speed = 10.0f;
 	victory.loop = false;
 	animator.AddAnimation("victory", victory);
@@ -124,6 +124,8 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Set the hitbox parameters
 	hitbox.parent = this;
+
+	debugRect = { 726, 4908, 40, 40 };
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -212,10 +214,14 @@ void ModuleEnemy::DrawToScreen()
 		{
 		case L_PUNCH:
 			currentFrame = animator.AnimateAction("light_punch");
+			if (animator.GetCurrentFrameNum() == 2)
+				is_flipped ? Hit({ position.x - 60, position.y - 75 }, 10) : Hit({ position.x + 60, position.y - 75 }, 30);
 			if (animator.AnimationFinished()) state = IDLE;
 			break;
 		case M_PUNCH:
 			currentFrame = animator.AnimateAction("medium_punch");
+			if (animator.GetCurrentFrameNum() == 2)
+				is_flipped ? Hit({ position.x - 80, position.y - 60 }, 10) : Hit({ position.x + 80, position.y - 60 }, 30);
 			if (animator.AnimationFinished()) state = IDLE;
 			break;
 		}
@@ -251,7 +257,7 @@ void ModuleEnemy::DoSomething()
 {
 	if (!is_enabled) return;
 
-	if (state == HURT || state == DEAD)
+	if (state == HURT || state == DEAD || state == VICTORY)
 	{
 		speed = 0;
 		return;
@@ -267,18 +273,16 @@ void ModuleEnemy::DoSomething()
 		if (random < 20)
 		{
 			// Walk forward
-			//LOG("WALK FOERWARD");
 			state = MOVEMENT;
 			speed = 1.0f;
 		}
 		else if (random < 40)
 		{
 			// Walk backwards
-			//LOG("WALK BACK");
 			state = MOVEMENT;
 			speed = -1.0f;
 		}
-		else if (random < 60)
+		else if (random < 50)
 		{
 			// Idle
 			//LOG("IDLE");
@@ -288,7 +292,6 @@ void ModuleEnemy::DoSomething()
 		else if (random < 80)
 		{
 			//Light punch
-			//LOG("LIGHT PUNCH");
 			speed = 0;
 			state = COMBAT;
 			attackState = L_PUNCH;
@@ -296,7 +299,6 @@ void ModuleEnemy::DoSomething()
 		else
 		{
 			//Light kick
-			//LOG("LIGHT KICK");
 			speed = 0;
 			state = COMBAT;
 			attackState = M_PUNCH;
@@ -306,3 +308,21 @@ void ModuleEnemy::DoSomething()
 
 	timer += App->delta;
 }
+
+void ModuleEnemy::Hit(iPoint position, int area)
+{
+	punch_box.area.x = position.x - (area / 2);
+	punch_box.area.y = position.y - (area / 2);
+	punch_box.area.w = punch_box.area.h = area;
+
+	debugRect.w = debugRect.h = area;
+
+	if (punch_box.IsColliding(App->player->hitbox))
+	{
+		App->player->TakeDamage(1);
+	}
+
+	App->renderer->Blit(graphics, punch_box.area.x, punch_box.area.y, &debugRect, SCREEN_SIZE);
+}
+
+
