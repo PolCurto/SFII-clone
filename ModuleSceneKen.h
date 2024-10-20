@@ -32,8 +32,10 @@ private:
 
 	float ship_y = 0;
 	float ship_sum = 0.1f;
+	float start_timer = 0;
 	float end_timer = 0;
 	bool is_fading = false;
+	bool match_started;
 };
 
 #endif // __MODULESCENEKEN_H__

@@ -18,7 +18,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	idle.frames.push_back({ 115, 12, 96, 96 });
 	idle.speed = 8.0f;
 	idle.loop = true;
-
 	animator.AddAnimation("idle", idle);
 
 	// walk backward animation (arcade sprite sheet)
@@ -33,7 +32,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	backward.frames.push_back({ 720, 128, 72, 86 });
 	backward.speed = 10.0f;
 	backward.loop = true;
-
 	animator.AddAnimation("walk_b", backward);
 
 	// walk forward animation
@@ -48,7 +46,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	forward.frames.push_back({ 1033, 26, 99, 77 });
 	forward.speed = 10.0f;
 	forward.loop = true;
-
 	animator.AddAnimation("walk_f", forward);
 
 	// Light punch animation
@@ -58,7 +55,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	light_punch.frames.push_back({ 268, 433, 109, 97 });
 	light_punch.speed = 8.0f;
 	light_punch.loop = false;
-
 	animator.AddAnimation("light_punch", light_punch);
 
 	// Light kick punch animation
@@ -68,19 +64,26 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	medium_punch.frames.push_back({ 219, 733, 137, 95 });
 	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
-
 	animator.AddAnimation("medium_punch", medium_punch);
 
-	// Get hurt animation
-	Animation get_hurt;
-	get_hurt.frames.push_back({ 448, 1631, 96, 85 });
-	get_hurt.frames.push_back({ 549, 1637, 100, 80 });
-	get_hurt.frames.push_back({ 655, 1644, 106, 72 });
-	get_hurt.frames.push_back({ 767, 1625, 96, 90 });
-	get_hurt.speed = 10.0f;
-	get_hurt.loop = false;
+	// Victory animation
+	Animation victory;
+	victory.frames.push_back({ 1243, 1913, 94, 113 });
+	victory.frames.push_back({ 1344, 1896, 116, 120 });
+	victory.frames.push_back({ 1489, 1875, 100, 140 });
+	victory.speed = 10.0f;
+	victory.loop = false;
+	animator.AddAnimation("victory", victory);
 
-	animator.AddAnimation("get_hurt", get_hurt);
+	// Get hurt animation
+	Animation hurt;
+	hurt.frames.push_back({ 448, 1631, 96, 85 });
+	hurt.frames.push_back({ 549, 1637, 100, 80 });
+	hurt.frames.push_back({ 655, 1644, 106, 72 });
+	hurt.frames.push_back({ 767, 1625, 96, 90 });
+	hurt.speed = 10.0f;
+	hurt.loop = false;
+	animator.AddAnimation("hurt", hurt);
 
 	// Defeat animation
 	Animation die;
@@ -91,8 +94,30 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 	die.frames.push_back({ 1049, 1992, 177, 39 });
 	die.speed = 8.0f;
 	die.loop = false;
-
 	animator.AddAnimation("die", die);
+
+	// Start animation
+	Animation start;
+	start.frames.push_back({ 9, 2108, 85, 63 });
+	start.frames.push_back({ 104, 2099, 86, 72 });
+	start.frames.push_back({ 201, 2084, 93, 87 });
+	start.frames.push_back({ 104, 2099, 86, 72 });
+	start.frames.push_back({ 201, 2084, 93, 87 });
+	start.frames.push_back({ 515, 2050, 71, 121 });
+	start.frames.push_back({ 597, 2049, 93, 122 });
+	start.frames.push_back({ 696, 2052, 88, 119 });
+	start.frames.push_back({ 793, 2052, 76, 119 });
+	start.frames.push_back({ 884, 2059, 67, 112 });
+	start.frames.push_back({ 965, 2057, 93, 114 });
+	start.frames.push_back({ 1069, 2090, 104, 83 });
+	start.frames.push_back({ 201, 2084, 93, 87 });
+	start.frames.push_back({ 104, 2099, 86, 72 });
+	start.frames.push_back({ 9, 2108, 85, 63 });
+	start.frames.push_back({ 104, 2099, 86, 72 });
+	start.frames.push_back({ 201, 2084, 93, 87 });
+	start.loop = false;
+	start.speed = 10.0f;
+	animator.AddAnimation("start", start);
 
 	// Set default animation
 	animator.SetDefaultAnimation("idle");
@@ -163,6 +188,10 @@ void ModuleEnemy::DrawToScreen()
 
 	switch (state)
 	{
+	case START:
+		currentFrame = animator.AnimateAction("start");
+		if (animator.AnimationFinished()) state = IDLE;
+		break;
 	case IDLE:
 		currentFrame = animator.AnimateAction("idle");
 		break;
@@ -190,7 +219,7 @@ void ModuleEnemy::DrawToScreen()
 		}
 		break;
 	case HURT:
-		currentFrame = animator.AnimateAction("get_hurt");
+		currentFrame = animator.AnimateAction("hurt");
 		if (animator.AnimationFinished())
 		{
 			is_hurt = false;
@@ -200,6 +229,9 @@ void ModuleEnemy::DrawToScreen()
 	case DEAD:
 		currentFrame = animator.AnimateAction("die");
 		if (animator.AnimationFinished()) is_alive = false;
+		break;
+	case VICTORY:
+		currentFrame = animator.AnimateAction("victory");
 		break;
 	default:
 		currentFrame = animator.AnimateAction("idle");
@@ -215,6 +247,8 @@ void ModuleEnemy::DrawToScreen()
 
 void ModuleEnemy::DoSomething()
 {
+	if (!is_enabled) return;
+
 	if (state == HURT || state == DEAD)
 	{
 		speed = 0;

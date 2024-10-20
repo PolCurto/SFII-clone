@@ -59,6 +59,9 @@ bool ModuleSceneKen::Start()
 	LOG("Loading ken scene");
 
 	is_fading = false;
+	match_started = false;
+	start_timer = 0;
+	end_timer = 0;
 	
 	graphics = App->textures->Load("ken_stage.png");
 
@@ -71,7 +74,7 @@ bool ModuleSceneKen::Start()
 
 	// Set camera limit
 	App->renderer->cameraLimit = 500;
-	
+
 	return true;
 }
 
@@ -121,16 +124,35 @@ update_status ModuleSceneKen::Update()
 
 	SetCharactersLimit();
 
+	if (!match_started && start_timer > 1.0f)
+	{
+		match_started = true;
+		App->player->StartMatch();
+		App->enemy->StartMatch();
+	}
+	else
+	{
+		start_timer += App->delta;
+	}
+
 	// Check if any of the players wins
 	if (!App->player->is_alive)
 	{
-		// Enemy victory animation
+		if (end_timer > 0.5f)
+		{
+			App->enemy->WinMatch();
+		}
+
+		if (!is_fading && end_timer > 3.0f)
+		{
+			is_fading = true;
+			App->fade->FadeToBlack(App->stage_selector, App->scene_ken, 3.0f);
+		}
+
+		end_timer += App->delta;
 	}
 	else if (!App->enemy->is_alive)
 	{
-		end_timer += App->delta;
-		LOG("End timer: %f", end_timer);
-
 		if (end_timer > 0.5f)
 		{
 			App->player->WinMatch();
@@ -141,8 +163,9 @@ update_status ModuleSceneKen::Update()
 			is_fading = true;
 			App->fade->FadeToBlack(App->stage_selector, App->scene_ken, 3.0f);
 		}
+
+		end_timer += App->delta;
 	}
-	// TODO: Fade to black after a few seconds after ending the match
 
 	return UPDATE_CONTINUE;
 }

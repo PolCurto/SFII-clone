@@ -17,7 +17,8 @@ enum CharacterState
 	COMBAT,
 	HURT,
 	DEAD,
-	VICTORY
+	VICTORY,
+	START
 };
 
 enum AttackState
@@ -39,6 +40,7 @@ public:
 	virtual bool CleanUp() { return true; };
 
 	virtual void Move();
+	virtual void StartMatch();
 	virtual void SetPositionLimits(int min, int max);
 	virtual void Hit(iPoint position, int area) {}
 	virtual void TakeDamage(int damage);
@@ -63,6 +65,7 @@ protected:
 	SDL_Rect debugRect;
 	int life = 2;
 	bool is_hurt = false;
+	bool is_enabled = false;
 };
 
 #endif // __MODULECHARACTER_H__

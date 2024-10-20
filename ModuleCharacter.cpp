@@ -56,3 +56,9 @@ void ModuleCharacter::WinMatch()
 	state = VICTORY;
 }
 
+void ModuleCharacter::StartMatch()
+{
+	state = START;
+	is_enabled = true;
+}
+
