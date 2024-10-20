@@ -50,4 +50,5 @@ public:
 	{
 		return current_animation->GetCurrentFrameNum();
 	}
+
 };

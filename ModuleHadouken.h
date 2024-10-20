@@ -5,6 +5,9 @@
 #include "Globals.h"
 #include "Animation.h"
 #include "Point.h"
+#include "Hitbox.h"
+
+class ModuleCharacter;
 
 struct SDL_Texture;
 
@@ -20,7 +23,8 @@ public:
 
 	void Move();
 	void Despawn();
-	void SetPosition(int x, int y);
+	void SetPosition();
+	void CheckCollisions();
 
 public:
 	SDL_Texture* graphics = nullptr;
@@ -30,9 +34,11 @@ public:
 	bool isFlipped = false;
 
 private:
-	float timeToKill = 3.0f;
-	float timer = 0.0f;
+	float time_to_kill;
+	float timer;
 	iPoint position;
+	Hitbox hitbox;
+	ModuleCharacter* enemy;
 };
 
 #endif // __MODULEHADOUKEN_H__

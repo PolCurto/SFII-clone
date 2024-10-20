@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleHadouken.h"
 #include "ModulePlayer.h"
+#include "ModuleEnemy.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -17,6 +18,9 @@ ModuleHadouken::ModuleHadouken(bool start_enabled) : Module(start_enabled)
 	despawn.frames.push_back({ 1079, 1565, 28, 27 });
 	despawn.speed = 14.0f;
 	despawn.loop = false;
+
+	time_to_kill = 4.0f;
+	hitbox.parent = this;
 }
 
 ModuleHadouken::~ModuleHadouken()
@@ -28,10 +32,8 @@ bool ModuleHadouken::Start()
 	timer = 0.0f;
 	finished = false;
 
-	if (isFlipped) position.x = App->player->position.x - 70;
-	else position.x = App->player->position.x + 70;
-
-	position.y = App->player->position.y - 75;
+	SetPosition();
+	enemy = App->enemy;
 
 	graphics = App->textures->Load("ryu4.png");
 	despawn.Reset();
@@ -43,18 +45,21 @@ bool ModuleHadouken::CleanUp()
 {
 	LOG("Hadouken out");
 
+	SetPosition();
+
 	App->textures->Unload(graphics);
 	return true;
 }
 
 update_status ModuleHadouken::Update()
 {
-	if (timer < timeToKill)
+	if (timer < time_to_kill)
 	{
-		//LOG("Timer: %f", timer);
 		Move();
-		App->renderer->Blit(graphics, position.x, position.y, &sprite, SCREEN_SIZE, isFlipped);
-		timer += 0.02f;
+		App->renderer->Blit(graphics, position.x - (sprite.w / 2), position.y - sprite.h, &sprite, SCREEN_SIZE, isFlipped);
+		hitbox.area = { position.x - 15, position.y - 10, 30, 20 };
+		CheckCollisions();
+		timer += App->delta;		
 	}
 	else
 	{
@@ -71,13 +76,24 @@ void ModuleHadouken::Move()
 
 void ModuleHadouken::Despawn()
 {
-	App->renderer->Blit(graphics, position.x, position.y, &(despawn.GetCurrentFrame()), SCREEN_SIZE, isFlipped);
+	SDL_Rect currentFrame = despawn.GetCurrentFrame();
+	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, isFlipped);
 	finished = despawn.finished;
 }
 
-void ModuleHadouken::SetPosition(int x, int y)
+void ModuleHadouken::SetPosition()
 {
-	LOG("SET POS");
-	position.x = x;
-	position.y = y;
+	if (isFlipped) position.x = App->player->position.x - 50;
+	else position.x = App->player->position.x + 50;
+
+	position.y = App->player->position.y - 45;
+}
+
+void ModuleHadouken::CheckCollisions()
+{
+	if (hitbox.IsColliding(enemy->hitbox))
+	{
+		enemy->TakeDamage(1);
+		timer = time_to_kill;
+	}
 }
