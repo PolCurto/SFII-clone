@@ -34,6 +34,10 @@ public:
 
 private:
 
+	float start_timer = 0;
+	float end_timer = 0;
+	bool is_fading = false;
+	bool match_started;
 	
 };
 

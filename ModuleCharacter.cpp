@@ -18,7 +18,19 @@ ModuleCharacter::ModuleCharacter(bool start_enabled) : Module(start_enabled)
 ModuleCharacter::~ModuleCharacter()
 {}
 
-// Update
+
+bool ModuleCharacter::Start()
+{
+	speed = 0;
+	life = 2;
+	is_hurt = false;
+	is_enabled = false;
+	is_alive = true;
+	state = IDLE;
+
+	return true;
+}
+
 update_status ModuleCharacter::Update()
 {
 	Move();

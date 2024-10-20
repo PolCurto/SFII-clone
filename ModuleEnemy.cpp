@@ -140,9 +140,11 @@ bool ModuleEnemy::Start()
 	position.x = 300;
 	position.y = 215;
 
+	timer = 0;
+
 	graphics = App->textures->Load("blanka.png"); // arcade version
 
-	return true;
+	return ModuleCharacter::Start();
 }
 
 // Unload assets
@@ -302,5 +304,5 @@ void ModuleEnemy::DoSomething()
 		
 	}
 
-	timer += 0.02f;
+	timer += App->delta;
 }

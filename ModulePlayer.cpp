@@ -156,7 +156,7 @@ bool ModulePlayer::Start()
 
 	hadouken = App->hadouken;
 
-	return true;
+	return ModuleCharacter::Start();
 }
 
 // Unload assets

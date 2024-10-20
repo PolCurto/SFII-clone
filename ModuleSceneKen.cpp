@@ -124,7 +124,7 @@ update_status ModuleSceneKen::Update()
 
 	SetCharactersLimit();
 
-	if (!match_started && start_timer > 1.0f)
+	if (!match_started && start_timer > 2.0f)
 	{
 		match_started = true;
 		App->player->StartMatch();

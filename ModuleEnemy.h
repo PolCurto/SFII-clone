@@ -26,7 +26,7 @@ public:
 
 private: 
 	float timer = 0;
-	float time_to_act = 4.0f;
+	float time_to_act = 2.0f;
 };
 
 #endif // __MODULEENEMY_H__

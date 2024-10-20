@@ -35,7 +35,7 @@ public:
 	ModuleCharacter(bool start_enabled = false);
 	~ModuleCharacter();
 
-	virtual bool Start() { return true; }
+	virtual bool Start();
 	virtual update_status Update();
 	virtual bool CleanUp() { return true; };
 
@@ -53,7 +53,7 @@ public:
 	int maxPositionLimit;
 	int minPositionLimit;
 	Hitbox hitbox;
-	bool is_alive = true;
+	bool is_alive;
 
 protected:
 	float speed = 0.0f;
@@ -63,9 +63,9 @@ protected:
 	Hitbox punch_box;
 
 	SDL_Rect debugRect;
-	int life = 2;
-	bool is_hurt = false;
-	bool is_enabled = false;
+	int life;
+	bool is_hurt;
+	bool is_enabled;
 };
 
 #endif // __MODULECHARACTER_H__
