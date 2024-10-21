@@ -22,7 +22,7 @@ ModuleCharacter::~ModuleCharacter()
 bool ModuleCharacter::Start()
 {
 	speed = 0;
-	life = 2;
+	life = 5;
 	is_hurt = false;
 	is_enabled = false;
 	is_alive = true;

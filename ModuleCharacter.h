@@ -56,7 +56,7 @@ public:
 	bool is_alive;
 
 protected:
-	float speed = 0.0f;
+	float speed;
 	CharacterState state;
 	AttackState attackState;
 	bool is_flipped;

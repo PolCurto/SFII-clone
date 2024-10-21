@@ -1,10 +1,11 @@
 #ifndef __MODULESTAGESELECTOR_H__
 #define __MODULESTAGESELECTOR_H__
 
+#include <vector>
 #include "Module.h"
 #include "Animation.h"
 #include "Globals.h"
-
+#include "StageIcon.h"
 struct SDL_Texture;
 
 class ModuleStageSelector : public Module
@@ -21,7 +22,8 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
-
+	vector<StageIcon> icons;
+	int selected_icon;
 };
 
 #endif // __MODULESTAGESELECTOR_H__

@@ -76,6 +76,9 @@
     <ClInclude Include="ModuleStageSelector.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
+    <ClInclude Include="StageIcon.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
