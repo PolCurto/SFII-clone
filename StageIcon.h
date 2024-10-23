@@ -11,17 +11,18 @@ struct SDL_Texture;
 class StageIcon
 {
 public:
-	Module* stage_to_load;
 	SDL_Rect selected_icon;
 	SDL_Rect unselected_icon;
 	SDL_Rect current_icon;
 	iPoint position;
 
 public:
-	StageIcon() : stage_to_load(nullptr), selected_icon({ 0, 0, 0, 0 }), unselected_icon({ 0, 0, 0, 0 }), current_icon(), position()
-	{
-		current_icon = unselected_icon;
-	}
+	StageIcon() : selected_icon(), unselected_icon(), current_icon(), position()
+	{}
+	
+	StageIcon(SDL_Rect selected, SDL_Rect unselected, SDL_Rect current, iPoint pos) 
+		: selected_icon(selected), unselected_icon(unselected), current_icon(current), position(pos)
+	{}
 
 	void Select()
 	{

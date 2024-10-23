@@ -82,6 +82,9 @@
     <ClInclude Include="CharacterData.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="MenuSelection.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
