@@ -26,6 +26,7 @@ public:
 	void Hit(iPoint position, int area) override;
 
 private: 
+	Animator animator;
 	float timer = 0;
 	float time_to_act = 2.0f;
 };

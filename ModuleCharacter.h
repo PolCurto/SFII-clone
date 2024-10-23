@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "Point.h"
 #include "Hitbox.h"
+#include "CharacterData.h"
 
 struct SDL_Texture;
 class ModuleEnemy;
@@ -48,12 +49,12 @@ public:
 
 public:
 	SDL_Texture* graphics = nullptr;
-	Animator animator;
 	iPoint position;
 	int maxPositionLimit;
 	int minPositionLimit;
 	Hitbox hitbox;
 	bool is_alive;
+	CharacterData character_data;
 
 protected:
 	float speed;
@@ -66,6 +67,7 @@ protected:
 	int life;
 	bool is_hurt;
 	bool is_enabled;
+
 };
 
 #endif // __MODULECHARACTER_H__

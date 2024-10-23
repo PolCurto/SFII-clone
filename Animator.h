@@ -2,7 +2,6 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include "ModuleCharacter.h"
 #include "Animation.h"
 
 using namespace std;
