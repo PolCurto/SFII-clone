@@ -58,6 +58,7 @@ bool ModuleStageSelector::Start()
 
 	characters.at(0)->stage_to_load = App->scene_honda;
 	characters.at(1)->stage_to_load = App->scene_ken;
+	characters.at(2)->stage_to_load = App->scene_ken;
 
 	App->audio->PlayMusic("stageselect.ogg");
 	
@@ -262,131 +263,128 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 
 Animator ModuleStageSelector::CreateKenAnimator() const
 {
-	Animator ryu_animator;
+	Animator ken_animator;
 
 	// idle animation (arcade sprite sheet)
 	Animation idle;
-	idle.frames.push_back({ 7, 14, 60, 90 });
-	idle.frames.push_back({ 95, 15, 60, 89 });
-	idle.frames.push_back({ 184, 14, 60, 90 });
-	idle.frames.push_back({ 276, 11, 60, 93 });
-	idle.frames.push_back({ 366, 12, 60, 92 });
+	idle.frames.push_back({ 0, 1, 55, 90 });
+	idle.frames.push_back({ 58, 2, 60, 89 });
+	idle.frames.push_back({ 123, 4, 60, 87 });
+	idle.frames.push_back({ 187, 5, 60, 86 });
+	idle.frames.push_back({ 251, 4, 60, 87 });
 	idle.speed = 10.0f;
 	idle.loop = true;
-	ryu_animator.AddAnimation("idle", idle);
+	ken_animator.AddAnimation("idle", idle);
 
-	// walk backward animation (arcade sprite sheet)
+	// Walk backward
 	Animation backward;
-	backward.frames.push_back({ 542, 131, 61, 87 });
-	backward.frames.push_back({ 628, 129, 59, 90 });
-	backward.frames.push_back({ 713, 128, 57, 90 });
-	backward.frames.push_back({ 797, 127, 57, 90 });
-	backward.frames.push_back({ 883, 128, 58, 91 });
-	backward.frames.push_back({ 974, 129, 57, 89 });
+	backward.frames.push_back({ 0, 1697, 64, 90 });
+	backward.frames.push_back({ 85, 1697, 66, 90 });
+	backward.frames.push_back({ 168, 1697, 72, 90 });
+	backward.frames.push_back({ 258, 1696, 66, 91 });
+	backward.frames.push_back({ 341, 1698, 62, 89 });
+	backward.frames.push_back({ 427, 1700, 64, 87 });
 	backward.speed = 12.0f;
 	backward.loop = true;
-	ryu_animator.AddAnimation("walk_b", backward);
+	ken_animator.AddAnimation("walk_b", backward);
 
-	// TODO 8: setup the walk forward animation from ryu4.png -- Done
+	// Walk forward
 	Animation forward;
-	forward.frames.push_back({ 9, 136, 53, 83 });
-	forward.frames.push_back({ 78, 131, 60, 88 });
-	forward.frames.push_back({ 162, 128, 64, 92 });
-	forward.frames.push_back({ 259, 128, 63, 90 });
-	forward.frames.push_back({ 352, 128, 54, 91 });
-	forward.frames.push_back({ 432, 131, 50, 89 });
+	forward.frames.push_back({ 375, 1603, 66, 88 });
+	forward.frames.push_back({ 461, 1601, 64, 90 });
+	forward.frames.push_back({ 538, 1602, 78, 89 });
+	forward.frames.push_back({ 630, 1602, 64, 89 });
+	forward.frames.push_back({ 709, 1602, 58, 89 });
+	forward.frames.push_back({ 779, 1608, 58, 83 });
 	forward.speed = 12.0f;
 	forward.loop = true;
-	ryu_animator.AddAnimation("walk_f", forward);
+	ken_animator.AddAnimation("walk_f", forward);
 
 	// Light punch animation
 	Animation light_punch;
-	light_punch.frames.push_back({ 13, 272, 70, 91 });
-	light_punch.frames.push_back({ 98, 272, 126, 91 });
-	light_punch.frames.push_back({ 13, 272, 70, 91 });
+	light_punch.frames.push_back({ 390, 3, 78, 90 });
+	light_punch.frames.push_back({ 480, 3, 134, 90 });
+	light_punch.frames.push_back({ 390, 3, 78, 90 });
 	light_punch.speed = 10.0f;
 	light_punch.loop = false;
-	ryu_animator.AddAnimation("light_punch", light_punch);
+	ken_animator.AddAnimation("light_punch", light_punch);
 
 	// Medium punch animation
 	Animation medium_punch;
-	medium_punch.frames.push_back({ 283, 269, 138, 94 });
-	medium_punch.frames.push_back({ 453, 268, 138, 93 });
-	medium_punch.frames.push_back({ 611, 268, 138, 92 });
-	medium_punch.frames.push_back({ 453, 268, 138, 93 });
-	medium_punch.frames.push_back({ 283, 269, 138, 94 });
+	medium_punch.frames.push_back({ 84, 103, 72, 94 });
+	medium_punch.frames.push_back({ 192, 102, 74, 95 });
+	medium_punch.frames.push_back({ 281, 103, 140, 94 });
+	medium_punch.frames.push_back({ 192, 102, 74, 95 });
 	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
-	ryu_animator.AddAnimation("medium_punch", medium_punch);
+	ken_animator.AddAnimation("medium_punch", medium_punch);
 
 	// Hadouken animation
 	Animation hadouken_anim;
-	hadouken_anim.frames.push_back({ 18, 1545, 90, 90 });
-	hadouken_anim.frames.push_back({ 176, 1551, 116, 86 });
-	hadouken_anim.frames.push_back({ 379, 1552, 102, 87 });
-	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
-	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
+	hadouken_anim.frames.push_back({ 497, 2550, 94, 90 });
+	hadouken_anim.frames.push_back({ 606, 2556, 116, 84 });
+	hadouken_anim.frames.push_back({ 654, 2445, 108, 81 });
+	hadouken_anim.frames.push_back({ 810, 2514, 118, 77 });
+	hadouken_anim.frames.push_back({ 810, 2514, 118, 77 });
 	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
-	ryu_animator.AddAnimation("hadouken", hadouken_anim);
+	ken_animator.AddAnimation("hadouken", hadouken_anim);
 
 	// Victory animation
 	Animation victory;
-	victory.frames.push_back({ 500, 2479, 42, 83 });
-	victory.frames.push_back({ 577, 2474, 56, 88 });
-	victory.frames.push_back({ 660, 2465, 60, 97 });
-	victory.frames.push_back({ 745, 2440, 55, 122 });
+	victory.frames.push_back({ 480, 2424, 60, 89 });
+	victory.frames.push_back({ 545, 2416, 60, 97 });
+	victory.frames.push_back({ 0, 2518, 55, 122 });
 	victory.speed = 6.0f;
 	victory.loop = false;
-	ryu_animator.AddAnimation("victory", victory);
+	ken_animator.AddAnimation("victory", victory);
 
 	// Hurt animation
 	Animation hurt;
-	hurt.frames.push_back({ 398, 2094, 58, 85 });
-	hurt.frames.push_back({ 482, 2097, 66, 82 });
-	hurt.frames.push_back({ 30, 2101, 68, 79 });
-	hurt.frames.push_back({ 117, 2090, 62, 90 });
+	hurt.frames.push_back({ 518, 1697, 62, 90 });
+	hurt.frames.push_back({ 609, 1696, 66, 91 });
+	hurt.frames.push_back({ 714, 1699, 68, 88 });
 	hurt.speed = 10.0f;
 	hurt.loop = false;
-	ryu_animator.AddAnimation("hurt", hurt);
+	ken_animator.AddAnimation("hurt", hurt);
 
 	// Defeat animation
 	Animation die;
-	die.frames.push_back({ 350, 2233, 124, 63 });
-	die.frames.push_back({ 687, 2247, 119, 44 });
-	die.frames.push_back({ 849, 2246, 123, 41 });
-	die.frames.push_back({ 984, 2265, 128, 31 });
+	die.frames.push_back({ 134, 1799, 71, 78 });
+	die.frames.push_back({ 845, 1833, 119, 44 });
+	die.frames.push_back({ 717, 1836, 123, 41 });
+	die.frames.push_back({ 584, 1846, 128, 31 });
 	die.speed = 6.0f;
 	die.loop = false;
-	ryu_animator.AddAnimation("die", die);
+	ken_animator.AddAnimation("die", die);
 
 	// Start animation
 	Animation start;
-	start.frames.push_back({ 47, 2467, 52, 97 });
-	start.frames.push_back({ 124, 2469, 54, 95 });
-	start.frames.push_back({ 206, 2469, 54, 95 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
+	start.frames.push_back({ 124, 2541, 56, 99 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 251, 2545, 54, 95 });
+	start.frames.push_back({ 251, 2545, 54, 95 });
+	start.frames.push_back({ 251, 2545, 54, 95 });
+	start.frames.push_back({ 251, 2545, 54, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
+	start.frames.push_back({ 185, 2545, 61, 95 });
 	start.speed = 10.0f;
 	start.loop = false;
-	ryu_animator.AddAnimation("start", start);
+	ken_animator.AddAnimation("start", start);
 
 	// Set the starting animation;
-	ryu_animator.SetDefaultAnimation("idle");
+	ken_animator.SetDefaultAnimation("idle");
 
-	return ryu_animator;
+	return ken_animator;
 }
 
 Animator ModuleStageSelector::CreateGuileAnimator() const
