@@ -70,7 +70,7 @@ bool ModuleSceneKen::Start()
 	App->enemy->Enable();
 
 	// TODO 0: trigger background music
-	App->audio->PlayMusic("ken.ogg");
+	App->audio->PlayMusic("guile.ogg");
 
 	// Set camera limit
 	App->renderer->cameraLimit = 500;

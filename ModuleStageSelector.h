@@ -28,6 +28,7 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
+	SDL_Rect player_selector;
 	vector<MenuSelection*> characters;
 	int selected_character;
 };

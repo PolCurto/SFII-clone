@@ -169,7 +169,7 @@ void ModulePlayer::DrawToScreen()
 				break;
 			case HADOUKEN:
 				currentFrame = character_data.animator.AnimateAction("hadouken");
-				if (character_data.animator.GetCurrentFrameNum() == 3) ThrowHadouken();
+				//if (character_data.animator.GetCurrentFrameNum() == 3) ThrowHadouken();
 				if (character_data.animator.AnimationFinished()) state = IDLE;
 				break;
 		}

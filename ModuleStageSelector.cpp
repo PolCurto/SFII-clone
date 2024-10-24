@@ -23,17 +23,22 @@ ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enab
 	background.w = 384;
 	background.h = 224;
 
-	SDL_Rect player_selector = { 149, 97, 32, 36 };
+	player_selector = { 149, 97, 32, 36 };
 
 	// Ryu
 	StageIcon japan({ 70, 63, 32, 24 }, { 70, 29, 32, 24 }, { 70, 63, 32, 24 }, { 195, 40 });
 	CharacterData ryu("ryu4.png", CreateRyuAnimator());
-	characters.push_back(new MenuSelection(japan, ryu, { 15, 153, 96, 96 }, { 40, 254, 47, 15}, player_selector));
+	characters.push_back(new MenuSelection(japan, ryu, { 15, 153, 96, 96 }, { 40, 254, 47, 15 }, { 96, 140 }));
 
 	// Guile
 	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 290, 55 });
 	CharacterData guile("guile.png", CreateGuileAnimator());
-	characters.push_back(new MenuSelection(usa, guile, { 332, 153, 96, 96 }, { 343, 254, 74, 15 }, player_selector));
+	characters.push_back(new MenuSelection(usa, guile, { 332, 153, 96, 96 }, { 343, 254, 74, 15 }, { 192, 140 }));
+
+	// Ken
+	//StageIcon usa tal
+	CharacterData ken("ken.png", CreateKenAnimator());
+	characters.push_back(new MenuSelection(usa, ken, { 15, 279, 96, 96 }, { 38, 380, 50, 15 }, { 96, 172 }));
 
 	selected_character = 0;
 
@@ -54,16 +59,15 @@ bool ModuleStageSelector::Start()
 	characters.at(0)->stage_to_load = App->scene_honda;
 	characters.at(1)->stage_to_load = App->scene_ken;
 
-	// TODO 0: trigger background music
-	//App->audio->PlayMusic("stage_select.ogg");
+	App->audio->PlayMusic("stageselect.ogg");
 	
 	App->renderer->cameraLimit = 0;
 	
-	(*characters.begin())->stage_icon.Select();
+	(*characters.begin())->Select();
 
 	for (vector<MenuSelection*>::iterator it = characters.begin() + 1; it != characters.end(); ++it)
 	{
-		(*it)->stage_icon.UnSelect();
+		(*it)->UnSelect();
 	}
 
 	selected_character = 0;
@@ -90,27 +94,32 @@ update_status ModuleStageSelector::Update()
 	for (vector<MenuSelection*>::iterator it = characters.begin(); it != characters.end(); ++it)
 	{
 		App->renderer->Blit(graphics, (*it)->stage_icon.position.x , (*it)->stage_icon.position.y, &(*it)->stage_icon.current_icon);
-		App->renderer->Blit(graphics, 0, SCREEN_HEIGHT / 2, &(*it)->character_icon);
-	}
+		if ((*it)->selected)
+		{
+			App->renderer->Blit(graphics, 0, SCREEN_HEIGHT - (*it)->character_icon.h, &(*it)->character_icon);
+			App->renderer->Blit(graphics, (*it)->character_icon.w / 2 - ((*it)->character_name.w / 2), SCREEN_HEIGHT - (*it)->character_icon.h - 20, &(*it)->character_name);
+			App->renderer->Blit(graphics, (*it)->selector_position.x, (*it)->selector_position.y, &player_selector);
+		}
+	}	
 	
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		characters.at(selected_character)->stage_icon.UnSelect();
+		characters.at(selected_character)->UnSelect();
 
 		selected_character += 1;
 		if (selected_character >= characters.size()) selected_character = 0;
 
-		characters.at(selected_character)->stage_icon.Select();
+		characters.at(selected_character)->Select();
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		characters.at(selected_character)->stage_icon.UnSelect();
+		characters.at(selected_character)->UnSelect();
 
-		selected_character += 1;
-		if (selected_character >= characters.size()) selected_character = 0;
+		selected_character -= 1;
+		if (selected_character < 0) selected_character = characters.size() - 1;
 
-		characters.at(selected_character)->stage_icon.Select();
+		characters.at(selected_character)->Select();
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
@@ -177,7 +186,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	medium_punch.frames.push_back({ 611, 268, 138, 92 });
 	medium_punch.frames.push_back({ 453, 268, 138, 93 });
 	medium_punch.frames.push_back({ 283, 269, 138, 94 });
-	medium_punch.speed = 8.0f;
+	medium_punch.speed = 10.0f;
 	medium_punch.loop = false;
 	ryu_animator.AddAnimation("medium_punch", medium_punch);
 
@@ -432,7 +441,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	medium_punch.frames.push_back({ 24, 731, 62, 93 });
 	medium_punch.frames.push_back({ 109, 731, 90, 93 });
 	medium_punch.frames.push_back({ 245, 730, 182, 94 });
-	medium_punch.speed = 8.0f;
+	medium_punch.speed = 10.0f;
 	medium_punch.loop = false;
 	guile_animator.AddAnimation("medium_punch", medium_punch);
 
@@ -448,30 +457,42 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 
 	// Victory animation
 	Animation victory;
-	victory.frames.push_back({ 500, 2479, 42, 83 });
-	victory.frames.push_back({ 577, 2474, 56, 88 });
-	victory.frames.push_back({ 660, 2465, 60, 97 });
-	victory.frames.push_back({ 745, 2440, 55, 122 });
-	victory.speed = 6.0f;
+	victory.frames.push_back({ 19, 3887, 78, 112 });
+	victory.frames.push_back({ 100, 3887, 78, 112 });
+	victory.frames.push_back({ 180, 3887, 78, 112 });
+	victory.frames.push_back({ 271, 3882, 78, 117 });
+	victory.frames.push_back({ 365, 3877, 78, 122 });
+	victory.frames.push_back({ 471, 3877, 78, 122 });
+	victory.frames.push_back({ 567, 3882, 78, 117 });
+	victory.frames.push_back({ 18, 4060, 78, 112 });
+	victory.frames.push_back({ 116, 4060, 104, 112 });
+	victory.frames.push_back({ 230, 4060, 104, 112 });
+	victory.frames.push_back({ 357, 4060, 98, 112 });
+	victory.frames.push_back({ 492, 4052, 96, 120 });
+	victory.frames.push_back({ 629, 4044, 88, 128 });
+	victory.frames.push_back({ 753, 4024, 82, 148 });
+	victory.frames.push_back({ 887, 4024, 82, 148 });
+	victory.speed = 8.0f;
 	victory.loop = false;
 	guile_animator.AddAnimation("victory", victory);
 
 	// Hurt animation
 	Animation hurt;
-	hurt.frames.push_back({ 398, 2094, 58, 85 });
-	hurt.frames.push_back({ 482, 2097, 66, 82 });
-	hurt.frames.push_back({ 30, 2101, 68, 79 });
-	hurt.frames.push_back({ 117, 2090, 62, 90 });
+	hurt.frames.push_back({ 20, 3404, 72, 92 });
+	hurt.frames.push_back({ 102, 3409, 70, 87 });
+	hurt.frames.push_back({ 182, 3421, 94, 75 });
+	hurt.frames.push_back({ 314, 3436, 100, 60 });
+	hurt.frames.push_back({ 102, 3409, 70, 87 });
 	hurt.speed = 10.0f;
 	hurt.loop = false;
 	guile_animator.AddAnimation("hurt", hurt);
 
 	// Defeat animation
 	Animation die;
-	die.frames.push_back({ 350, 2233, 124, 63 });
-	die.frames.push_back({ 687, 2247, 119, 44 });
-	die.frames.push_back({ 849, 2246, 123, 41 });
-	die.frames.push_back({ 984, 2265, 128, 31 });
+	die.frames.push_back({ 20, 3404, 72, 92 });
+	die.frames.push_back({ 448, 3754, 126, 62 });
+	die.frames.push_back({ 611, 3769, 122, 47 });
+	die.frames.push_back({ 746, 3782, 139, 34 });
 	die.speed = 6.0f;
 	die.loop = false;
 	guile_animator.AddAnimation("die", die);
@@ -482,12 +503,16 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	start.frames.push_back({ 654, 4210, 76, 125 });
 	start.frames.push_back({ 762, 4215, 66, 120 });
 	start.frames.push_back({ 865, 4210, 66, 125 });
+	start.frames.push_back({ 549, 4221, 80, 114 });
+	start.frames.push_back({ 654, 4210, 76, 125 });
+	start.frames.push_back({ 762, 4215, 66, 120 });
+	start.frames.push_back({ 865, 4210, 66, 125 });
 	start.frames.push_back({ 958, 4215, 86, 120 });
 	start.frames.push_back({ 1066, 4215, 76, 120 });
 	start.frames.push_back({ 1169, 4216, 76, 119 });
 	start.frames.push_back({ 1272, 4220, 76, 115 });
 	start.frames.push_back({ 1272, 4220, 76, 115 });
-	start.speed = 5.0;
+	start.speed = 7.0;
 	start.loop = false;
 	guile_animator.AddAnimation("start", start);
 
