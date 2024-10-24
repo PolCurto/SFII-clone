@@ -10,13 +10,15 @@ public:
 	CharacterData character_data;
 	Module* stage_to_load;
 	SDL_Rect character_icon;
+	SDL_Rect character_name;
+	SDL_Rect player_selector;
 
 public:
-	MenuSelection() : stage_icon(), character_data(), stage_to_load(), character_icon()
+	MenuSelection() : stage_icon(), character_data(), stage_to_load(), character_icon(), character_name(), player_selector()
 	{}
 
-	MenuSelection(StageIcon icon, CharacterData data, SDL_Rect character) 
-		: stage_icon(icon), character_data(data), character_icon(character)
+	MenuSelection(StageIcon icon, CharacterData data, SDL_Rect character, SDL_Rect name, SDL_Rect selector) 
+		: stage_icon(icon), character_data(data), character_icon(character), character_name(name), player_selector(selector)
 	{}
 
 };

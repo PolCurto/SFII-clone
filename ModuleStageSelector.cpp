@@ -23,15 +23,17 @@ ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enab
 	background.w = 384;
 	background.h = 224;
 
+	SDL_Rect player_selector = { 149, 97, 32, 36 };
+
 	// Ryu
 	StageIcon japan({ 70, 63, 32, 24 }, { 70, 29, 32, 24 }, { 70, 63, 32, 24 }, { 195, 40 });
 	CharacterData ryu("ryu4.png", CreateRyuAnimator());
-	characters.push_back(new MenuSelection(japan, ryu, { 0, 0, 0, 0 }));
+	characters.push_back(new MenuSelection(japan, ryu, { 15, 153, 96, 96 }, { 40, 254, 47, 15}, player_selector));
 
 	// Guile
 	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 290, 55 });
 	CharacterData guile("guile.png", CreateGuileAnimator());
-	characters.push_back(new MenuSelection( usa, guile, {0, 0, 0, 0} ));
+	characters.push_back(new MenuSelection(usa, guile, { 332, 153, 96, 96 }, { 343, 254, 74, 15 }, player_selector));
 
 	selected_character = 0;
 
@@ -418,31 +420,28 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 
 	// Light punch animation
 	Animation light_punch;
-	light_punch.frames.push_back({ 13, 272, 70, 91 });
-	light_punch.frames.push_back({ 98, 272, 126, 91 });
-	light_punch.frames.push_back({ 13, 272, 70, 91 });
+	light_punch.frames.push_back({ 15, 565, 80, 91 });
+	light_punch.frames.push_back({ 106, 565, 142, 91 });
+	light_punch.frames.push_back({ 249, 565, 96, 91 });
 	light_punch.speed = 10.0f;
 	light_punch.loop = false;
 	guile_animator.AddAnimation("light_punch", light_punch);
 
 	// Medium punch animation
 	Animation medium_punch;
-	medium_punch.frames.push_back({ 283, 269, 138, 94 });
-	medium_punch.frames.push_back({ 453, 268, 138, 93 });
-	medium_punch.frames.push_back({ 611, 268, 138, 92 });
-	medium_punch.frames.push_back({ 453, 268, 138, 93 });
-	medium_punch.frames.push_back({ 283, 269, 138, 94 });
+	medium_punch.frames.push_back({ 24, 731, 62, 93 });
+	medium_punch.frames.push_back({ 109, 731, 90, 93 });
+	medium_punch.frames.push_back({ 245, 730, 182, 94 });
 	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
 	guile_animator.AddAnimation("medium_punch", medium_punch);
 
 	// Hadouken animation
 	Animation hadouken_anim;
-	hadouken_anim.frames.push_back({ 18, 1545, 90, 90 });
-	hadouken_anim.frames.push_back({ 176, 1551, 116, 86 });
-	hadouken_anim.frames.push_back({ 379, 1552, 102, 87 });
-	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
-	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
+	hadouken_anim.frames.push_back({ 24, 2367, 76, 81 });
+	hadouken_anim.frames.push_back({ 159, 2360, 130, 88 });
+	hadouken_anim.frames.push_back({ 339, 2364, 146, 84 });
+	hadouken_anim.frames.push_back({ 532, 2361, 188, 87 });
 	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
 	guile_animator.AddAnimation("hadouken", hadouken_anim);
@@ -479,24 +478,16 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 
 	// Start animation
 	Animation start;
-	start.frames.push_back({ 47, 2467, 52, 97 });
-	start.frames.push_back({ 124, 2469, 54, 95 });
-	start.frames.push_back({ 206, 2469, 54, 95 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.frames.push_back({ 289, 2469, 54, 95 });
-	start.frames.push_back({ 380, 2468, 54, 96 });
-	start.speed = 10.0f;
+	start.frames.push_back({ 549, 4221, 80, 114 });
+	start.frames.push_back({ 654, 4210, 76, 125 });
+	start.frames.push_back({ 762, 4215, 66, 120 });
+	start.frames.push_back({ 865, 4210, 66, 125 });
+	start.frames.push_back({ 958, 4215, 86, 120 });
+	start.frames.push_back({ 1066, 4215, 76, 120 });
+	start.frames.push_back({ 1169, 4216, 76, 119 });
+	start.frames.push_back({ 1272, 4220, 76, 115 });
+	start.frames.push_back({ 1272, 4220, 76, 115 });
+	start.speed = 5.0;
 	start.loop = false;
 	guile_animator.AddAnimation("start", start);
 

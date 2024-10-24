@@ -30,7 +30,7 @@ bool ModulePlayer::Start()
 	position.x = 100;
 	position.y = 215;
 
-	graphics = App->textures->Load("ryu4.png"); // arcade version
+	graphics = App->textures->Load(character_data.texture_name); // arcade version
 
 	hadouken = App->hadouken;
 
