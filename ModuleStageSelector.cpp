@@ -267,11 +267,11 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 
 	// idle animation (arcade sprite sheet)
 	Animation idle;
-	idle.frames.push_back({ 0, 1, 55, 90 });
-	idle.frames.push_back({ 58, 2, 60, 89 });
-	idle.frames.push_back({ 123, 4, 60, 87 });
-	idle.frames.push_back({ 187, 5, 60, 86 });
-	idle.frames.push_back({ 251, 4, 60, 87 });
+	idle.frames.push_back({ 0, 1, 55, 93 });
+	idle.frames.push_back({ 58, 2, 60, 92 });
+	idle.frames.push_back({ 123, 4, 60, 90 });
+	idle.frames.push_back({ 187, 5, 60, 89 });
+	idle.frames.push_back({ 251, 4, 60, 90 });
 	idle.speed = 10.0f;
 	idle.loop = true;
 	ken_animator.AddAnimation("idle", idle);
