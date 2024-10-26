@@ -265,7 +265,7 @@ void ModuleStageSelector::CreateRyuAnimator(Animator& character_anim, Animator& 
 	// Projectile
 	Animation movement;
 	movement.frames.push_back({ 819, 1563, 43, 32 });
-	movement.speed = 0;
+	movement.speed = 0.0f;
 	movement.loop = true;
 	projectile_anim.AddAnimation("movement", movement);
 
@@ -404,7 +404,7 @@ void ModuleStageSelector::CreateKenAnimator(Animator& character_anim, Animator& 
 	// Projectile
 	Animation movement;
 	movement.frames.push_back({ 643, 2044, 43, 32 });
-	movement.speed = 0;
+	movement.speed = 0.0f;
 	movement.loop = true;
 	projectile_anim.AddAnimation("movement", movement);
 

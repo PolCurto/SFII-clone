@@ -21,6 +21,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void Spawn();
 	void Move();
 	void Despawn();
 	void SetPosition();
@@ -31,6 +32,8 @@ public:
 	Animator animator;
 	bool is_finished = false;
 	bool is_flipped = false;
+	char* texture_name = nullptr;
+	bool on_screen;
 
 private:
 	float time_to_kill;

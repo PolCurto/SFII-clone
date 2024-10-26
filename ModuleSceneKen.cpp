@@ -68,6 +68,7 @@ bool ModuleSceneKen::Start()
 	// TODO 7: Enable the player module
 	App->player->Enable();
 	App->enemy->Enable();
+	App->projectile->Enable();
 
 	// TODO 0: trigger background music
 	App->audio->PlayMusic("guile.ogg");
@@ -86,6 +87,7 @@ bool ModuleSceneKen::CleanUp()
 	App->textures->Unload(graphics);
 	App->player->Disable();
 	App->enemy->Disable();
+	App->projectile->Disable();
 	
 	return true;
 }

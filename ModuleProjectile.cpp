@@ -18,19 +18,30 @@ ModuleProjectile::~ModuleProjectile()
 
 bool ModuleProjectile::Start()
 {
-	LOG("Hadouken!");
-	timer = 0.0f;
-	is_finished = false;
-
-	SetPosition();
+	LOG("Loading projectile");
+	graphics = App->textures->Load(texture_name);
 	enemy = App->enemy;
+
+	position.x = -1000;
+	position.y = -1000;
+	on_screen = false;
 
 	return true;
 }
 
+void ModuleProjectile::Spawn()
+{
+	LOG("Hadouken!");
+	timer = 0.0f;
+	is_finished = false;
+	on_screen = true;
+
+	SetPosition();
+}
+
 bool ModuleProjectile::CleanUp()
 {
-	LOG("Hadouken out");
+	LOG("Unloading projectile");
 
 	SetPosition();
 
@@ -43,7 +54,7 @@ update_status ModuleProjectile::Update()
 	if (timer < time_to_kill)
 	{
 		Move();
-		SDL_Rect currentFrame = animator.AnimateAction("move");
+		SDL_Rect currentFrame = animator.AnimateAction("movement");
 		App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, is_flipped);
 		hitbox.area = { position.x - 15, position.y - 10, 30, 20 };
 		CheckCollisions();
@@ -66,7 +77,12 @@ void ModuleProjectile::Despawn()
 {
 	SDL_Rect currentFrame = animator.AnimateAction("despawn");
 	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, is_flipped);
-	is_finished = animator.AnimationFinished();
+	if (animator.AnimationFinished())
+	{
+		position.x = -1000;
+		position.y = -1000;
+		on_screen = false;
+	}	
 }
 
 void ModuleProjectile::SetPosition()

@@ -30,6 +30,7 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load(character_data.texture_name); // arcade version
 	projectile = App->projectile;
+	projectile->texture_name = character_data.texture_name;
 	projectile->animator = character_data.projectile_animator;
 
 	return ModuleCharacter::Start();
@@ -119,7 +120,7 @@ void ModulePlayer::CheckPlayerInputs()
 		state = COMBAT;
 		attackState = M_PUNCH;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN && !projectile->IsEnabled())
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN && !projectile->on_screen)
 	{
 		speed = 0.0f;
 		state = COMBAT;
@@ -167,7 +168,7 @@ void ModulePlayer::DrawToScreen()
 				break;
 			case HADOUKEN:
 				currentFrame = character_data.animator.AnimateAction("hadouken");
-				//if (character_data.animator.GetCurrentFrameNum() == 3) ThrowHadouken();
+				if (character_data.animator.GetCurrentFrameNum() == 3) ThrowProjectile();
 				if (character_data.animator.AnimationFinished()) state = IDLE;
 				break;
 		}
@@ -218,6 +219,5 @@ void ModulePlayer::Hit(iPoint position, int area)
 void ModulePlayer::ThrowProjectile()
 {
 	projectile->is_flipped = is_flipped;
-	projectile->graphics = graphics;
-	projectile->Enable();
+	projectile->Spawn();
 }
