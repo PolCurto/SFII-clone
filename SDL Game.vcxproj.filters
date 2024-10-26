@@ -67,7 +67,7 @@
     <ClInclude Include="Hitbox.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleHadouken.h">
+    <ClInclude Include="ModuleProjectile.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
@@ -129,7 +129,7 @@
     <ClCompile Include="ModuleCharacter.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleHadouken.cpp">
+    <ClCompile Include="ModuleProjectile.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleStageSelector.cpp">

@@ -18,7 +18,6 @@ Application::Application()
 	// Order matters: they will init/start/pre/update/post in this order
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
-
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(audio = new ModuleAudio());
@@ -28,7 +27,7 @@ Application::Application()
 	modules.push_back(scene_ken = new ModuleSceneKen(false));
 	modules.push_back(scene_honda = new ModuleSceneHonda(false));
 	modules.push_back(player = new ModulePlayer(false));
-	modules.push_back(hadouken = new ModuleHadouken(false));
+	modules.push_back(projectile = new ModuleProjectile(false));
 	modules.push_back(enemy = new ModuleEnemy(false));
 	modules.push_back(fade = new ModuleFadeToBlack());
 }

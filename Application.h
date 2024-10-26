@@ -17,7 +17,7 @@ class ModuleEnemy;
 class ModuleSceneKen;
 class ModuleSceneHonda;
 class ModuleStageSelector;
-class ModuleHadouken;
+class ModuleProjectile;
 
 class Application
 {
@@ -42,7 +42,7 @@ public:
 	ModuleSceneKen* scene_ken;
 	ModuleSceneHonda* scene_honda;
 	ModuleStageSelector* stage_selector;
-	ModuleHadouken* hadouken;
+	ModuleProjectile* projectile;
 
 	double delta;
 
@@ -52,7 +52,6 @@ private:
 	std::chrono::steady_clock::time_point current_time;
 	std::chrono::steady_clock::time_point last_time;
 	std::chrono::duration<double, std::milli> time_lapse;
-
 };
 
 extern Application* App;

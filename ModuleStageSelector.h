@@ -20,9 +20,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	Animator CreateRyuAnimator() const;
-	Animator CreateKenAnimator() const;
-	Animator CreateGuileAnimator() const;
+	void CreateRyuAnimator(Animator& character_anim, Animator& projectile_anim) const;
+	void CreateKenAnimator(Animator& character_anim, Animator& projectile_anim) const;
+	void CreateGuileAnimator(Animator& character_anim, Animator& projectile_anim) const;
 
 public:
 

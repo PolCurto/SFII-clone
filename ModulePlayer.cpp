@@ -11,9 +11,7 @@
 ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 {
 	hitbox.parent = this;
-
 	debugRect = { 1061, 2457, 20, 20 };
-
 }
 
 ModulePlayer::~ModulePlayer()
@@ -31,8 +29,8 @@ bool ModulePlayer::Start()
 	position.y = 215;
 
 	graphics = App->textures->Load(character_data.texture_name); // arcade version
-
-	hadouken = App->hadouken;
+	projectile = App->projectile;
+	projectile->animator = character_data.projectile_animator;
 
 	return ModuleCharacter::Start();
 }
@@ -43,7 +41,7 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading player");
 
 	App->textures->Unload(graphics);
-	hadouken = nullptr;
+	projectile = nullptr;
 
 	return true;
 }
@@ -56,9 +54,9 @@ update_status ModulePlayer::Update()
 	ModuleCharacter::Update();
 	DrawToScreen();
 
-	if (hadouken->IsEnabled() && (hadouken->finished))
+	if (projectile->IsEnabled() && (projectile->is_finished))
 	{
-		hadouken->Disable();
+		projectile->Disable();
 	}
 
 	return UPDATE_CONTINUE;
@@ -121,7 +119,7 @@ void ModulePlayer::CheckPlayerInputs()
 		state = COMBAT;
 		attackState = M_PUNCH;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN && !hadouken->IsEnabled())
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN && !projectile->IsEnabled())
 	{
 		speed = 0.0f;
 		state = COMBAT;
@@ -217,8 +215,9 @@ void ModulePlayer::Hit(iPoint position, int area)
 	App->renderer->Blit(graphics, punch_box.area.x, punch_box.area.y, &debugRect, SCREEN_SIZE);
 }
 
-void ModulePlayer::ThrowHadouken()
+void ModulePlayer::ThrowProjectile()
 {
-	hadouken->isFlipped = is_flipped;
-	hadouken->Enable();
+	projectile->is_flipped = is_flipped;
+	projectile->graphics = graphics;
+	projectile->Enable();
 }

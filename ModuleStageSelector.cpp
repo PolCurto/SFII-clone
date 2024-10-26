@@ -27,17 +27,23 @@ ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enab
 
 	// Ryu
 	StageIcon japan({ 70, 63, 32, 24 }, { 70, 29, 32, 24 }, { 70, 63, 32, 24 }, { 195, 40 });
-	CharacterData ryu("ryu4.png", CreateRyuAnimator());
+	Animator ryu_animator, ryu_projectile_animator;
+	CreateRyuAnimator(ryu_animator, ryu_projectile_animator);
+	CharacterData ryu("ryu4.png", ryu_animator, ryu_projectile_animator);
 	characters.push_back(new MenuSelection(japan, ryu, { 15, 153, 96, 96 }, { 40, 254, 47, 15 }, { 96, 140 }));
 
 	// Guile
 	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 290, 55 });
-	CharacterData guile("guile.png", CreateGuileAnimator());
+	Animator guile_animator, guile_projectile_animator;
+	CreateGuileAnimator(guile_animator, guile_projectile_animator);
+	CharacterData guile("guile.png", guile_animator, guile_projectile_animator);
 	characters.push_back(new MenuSelection(usa, guile, { 332, 153, 96, 96 }, { 343, 254, 74, 15 }, { 192, 140 }));
 
 	// Ken
 	//StageIcon usa tal
-	CharacterData ken("ken.png", CreateKenAnimator());
+	Animator ken_animator, ken_projectile_animator;
+	CreateKenAnimator(ken_animator, ken_projectile_animator);
+	CharacterData ken("ken.png", ken_animator, ken_projectile_animator);
 	characters.push_back(new MenuSelection(usa, ken, { 15, 279, 96, 96 }, { 38, 380, 50, 15 }, { 96, 172 }));
 
 	selected_character = 0;
@@ -132,10 +138,8 @@ update_status ModuleStageSelector::Update()
 	return UPDATE_CONTINUE;
 }
 
-Animator ModuleStageSelector::CreateRyuAnimator() const
+void ModuleStageSelector::CreateRyuAnimator(Animator& character_anim, Animator& projectile_anim) const
 {
-	Animator ryu_animator;
-
 	// idle animation (arcade sprite sheet)
 	Animation idle;
 	idle.frames.push_back({ 7, 14, 60, 90 });
@@ -145,7 +149,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	idle.frames.push_back({ 366, 12, 60, 92 });
 	idle.speed = 10.0f;
 	idle.loop = true;
-	ryu_animator.AddAnimation("idle", idle);
+	character_anim.AddAnimation("idle", idle);
 
 	// walk backward animation (arcade sprite sheet)
 	Animation backward;
@@ -157,7 +161,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	backward.frames.push_back({ 974, 129, 57, 89 });
 	backward.speed = 12.0f;
 	backward.loop = true;
-	ryu_animator.AddAnimation("walk_b", backward);
+	character_anim.AddAnimation("walk_b", backward);
 
 	// TODO 8: setup the walk forward animation from ryu4.png -- Done
 	Animation forward;
@@ -169,7 +173,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	forward.frames.push_back({ 432, 131, 50, 89 });
 	forward.speed = 12.0f;
 	forward.loop = true;
-	ryu_animator.AddAnimation("walk_f", forward);
+	character_anim.AddAnimation("walk_f", forward);
 
 	// Light punch animation
 	Animation light_punch;
@@ -178,7 +182,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	light_punch.frames.push_back({ 13, 272, 70, 91 });
 	light_punch.speed = 10.0f;
 	light_punch.loop = false;
-	ryu_animator.AddAnimation("light_punch", light_punch);
+	character_anim.AddAnimation("light_punch", light_punch);
 
 	// Medium punch animation
 	Animation medium_punch;
@@ -189,7 +193,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	medium_punch.frames.push_back({ 283, 269, 138, 94 });
 	medium_punch.speed = 10.0f;
 	medium_punch.loop = false;
-	ryu_animator.AddAnimation("medium_punch", medium_punch);
+	character_anim.AddAnimation("medium_punch", medium_punch);
 
 	// Hadouken animation
 	Animation hadouken_anim;
@@ -200,7 +204,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	hadouken_anim.frames.push_back({ 609, 1558, 118, 77 });
 	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
-	ryu_animator.AddAnimation("hadouken", hadouken_anim);
+	character_anim.AddAnimation("hadouken", hadouken_anim);
 
 	// Victory animation
 	Animation victory;
@@ -210,7 +214,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	victory.frames.push_back({ 745, 2440, 55, 122 });
 	victory.speed = 6.0f;
 	victory.loop = false;
-	ryu_animator.AddAnimation("victory", victory);
+	character_anim.AddAnimation("victory", victory);
 
 	// Hurt animation
 	Animation hurt;
@@ -220,7 +224,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	hurt.frames.push_back({ 117, 2090, 62, 90 });
 	hurt.speed = 10.0f;
 	hurt.loop = false;
-	ryu_animator.AddAnimation("hurt", hurt);
+	character_anim.AddAnimation("hurt", hurt);
 
 	// Defeat animation
 	Animation die;
@@ -230,7 +234,7 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	die.frames.push_back({ 984, 2265, 128, 31 });
 	die.speed = 6.0f;
 	die.loop = false;
-	ryu_animator.AddAnimation("die", die);
+	character_anim.AddAnimation("die", die);
 
 	// Start animation
 	Animation start;
@@ -253,18 +257,31 @@ Animator ModuleStageSelector::CreateRyuAnimator() const
 	start.frames.push_back({ 380, 2468, 54, 96 });
 	start.speed = 10.0f;
 	start.loop = false;
-	ryu_animator.AddAnimation("start", start);
+	character_anim.AddAnimation("start", start);
 
 	// Set the starting animation;
-	ryu_animator.SetDefaultAnimation("idle");
+	character_anim.SetDefaultAnimation("idle");
 
-	return ryu_animator;
+	// Projectile
+	Animation movement;
+	movement.frames.push_back({ 819, 1563, 43, 32 });
+	movement.speed = 0;
+	movement.loop = true;
+	projectile_anim.AddAnimation("movement", movement);
+
+	Animation despawn;
+	despawn.frames.push_back({ 977, 1569, 26, 20});
+	despawn.frames.push_back({ 1025, 1566, 26, 25});
+	despawn.frames.push_back({ 1079, 1565, 30, 28});
+	despawn.speed = 10.0f;
+	despawn.loop = false;
+	projectile_anim.AddAnimation("despawn", despawn);
+
+	projectile_anim.SetDefaultAnimation("movement");
 }
 
-Animator ModuleStageSelector::CreateKenAnimator() const
+void ModuleStageSelector::CreateKenAnimator(Animator& character_anim, Animator& projectile_anim) const
 {
-	Animator ken_animator;
-
 	// idle animation (arcade sprite sheet)
 	Animation idle;
 	idle.frames.push_back({ 0, 1, 55, 93 });
@@ -274,7 +291,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	idle.frames.push_back({ 251, 4, 60, 90 });
 	idle.speed = 10.0f;
 	idle.loop = true;
-	ken_animator.AddAnimation("idle", idle);
+	character_anim.AddAnimation("idle", idle);
 
 	// Walk backward
 	Animation backward;
@@ -286,7 +303,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	backward.frames.push_back({ 427, 1700, 64, 87 });
 	backward.speed = 12.0f;
 	backward.loop = true;
-	ken_animator.AddAnimation("walk_b", backward);
+	character_anim.AddAnimation("walk_b", backward);
 
 	// Walk forward
 	Animation forward;
@@ -298,7 +315,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	forward.frames.push_back({ 779, 1608, 58, 83 });
 	forward.speed = 12.0f;
 	forward.loop = true;
-	ken_animator.AddAnimation("walk_f", forward);
+	character_anim.AddAnimation("walk_f", forward);
 
 	// Light punch animation
 	Animation light_punch;
@@ -307,7 +324,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	light_punch.frames.push_back({ 390, 3, 78, 90 });
 	light_punch.speed = 10.0f;
 	light_punch.loop = false;
-	ken_animator.AddAnimation("light_punch", light_punch);
+	character_anim.AddAnimation("light_punch", light_punch);
 
 	// Medium punch animation
 	Animation medium_punch;
@@ -317,7 +334,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	medium_punch.frames.push_back({ 192, 102, 74, 95 });
 	medium_punch.speed = 8.0f;
 	medium_punch.loop = false;
-	ken_animator.AddAnimation("medium_punch", medium_punch);
+	character_anim.AddAnimation("medium_punch", medium_punch);
 
 	// Hadouken animation
 	Animation hadouken_anim;
@@ -328,7 +345,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	hadouken_anim.frames.push_back({ 810, 2514, 118, 77 });
 	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
-	ken_animator.AddAnimation("hadouken", hadouken_anim);
+	character_anim.AddAnimation("hadouken", hadouken_anim);
 
 	// Victory animation
 	Animation victory;
@@ -337,16 +354,16 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	victory.frames.push_back({ 0, 2518, 55, 122 });
 	victory.speed = 6.0f;
 	victory.loop = false;
-	ken_animator.AddAnimation("victory", victory);
+	character_anim.AddAnimation("victory", victory);
 
 	// Hurt animation
 	Animation hurt;
 	hurt.frames.push_back({ 518, 1697, 62, 90 });
 	hurt.frames.push_back({ 609, 1696, 66, 91 });
 	hurt.frames.push_back({ 714, 1699, 68, 88 });
-	hurt.speed = 10.0f;
 	hurt.loop = false;
-	ken_animator.AddAnimation("hurt", hurt);
+	hurt.speed = 10.0f;
+	character_anim.AddAnimation("hurt", hurt);
 
 	// Defeat animation
 	Animation die;
@@ -356,7 +373,7 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	die.frames.push_back({ 584, 1846, 128, 31 });
 	die.speed = 6.0f;
 	die.loop = false;
-	ken_animator.AddAnimation("die", die);
+	character_anim.AddAnimation("die", die);
 
 	// Start animation
 	Animation start;
@@ -379,18 +396,31 @@ Animator ModuleStageSelector::CreateKenAnimator() const
 	start.frames.push_back({ 185, 2545, 61, 95 });
 	start.speed = 10.0f;
 	start.loop = false;
-	ken_animator.AddAnimation("start", start);
+	character_anim.AddAnimation("start", start);
 
 	// Set the starting animation;
-	ken_animator.SetDefaultAnimation("idle");
+	character_anim.SetDefaultAnimation("idle");
 
-	return ken_animator;
+	// Projectile
+	Animation movement;
+	movement.frames.push_back({ 643, 2044, 43, 32 });
+	movement.speed = 0;
+	movement.loop = true;
+	projectile_anim.AddAnimation("movement", movement);
+
+	Animation despawn;
+	despawn.frames.push_back({ 801, 2050, 26, 20 });
+	despawn.frames.push_back({ 849, 2047, 26, 25 });
+	despawn.frames.push_back({ 903, 2046, 30, 28 });
+	despawn.speed = 10.0f;
+	despawn.loop = false;
+	projectile_anim.AddAnimation("despawn", despawn);
+
+	projectile_anim.SetDefaultAnimation("movement");
 }
 
-Animator ModuleStageSelector::CreateGuileAnimator() const
+void ModuleStageSelector::CreateGuileAnimator(Animator& character_anim, Animator& projectile_anim) const
 {
-	Animator guile_animator;
-
 	// idle animation (arcade sprite sheet)
 	Animation idle;
 	idle.frames.push_back({ 24, 62, 76, 90 });
@@ -401,7 +431,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	idle.frames.push_back({ 484, 62, 76, 90 });
 	idle.speed = 10.0f;
 	idle.loop = true;
-	guile_animator.AddAnimation("idle", idle);
+	character_anim.AddAnimation("idle", idle);
 
 	// walk backward animation (arcade sprite sheet)
 	Animation backward;
@@ -412,7 +442,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	backward.frames.push_back({ 383, 233, 68, 95 });
 	backward.speed = 12.0f;
 	backward.loop = true;
-	guile_animator.AddAnimation("walk_b", backward);
+	character_anim.AddAnimation("walk_b", backward);
 
 	// TODO 8: setup the walk forward animation from ryu4.png -- Done
 	Animation forward;
@@ -423,7 +453,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	forward.frames.push_back({ 872, 238, 60, 90 });
 	forward.speed = 12.0f;
 	forward.loop = true;
-	guile_animator.AddAnimation("walk_f", forward);
+	character_anim.AddAnimation("walk_f", forward);
 
 	// Light punch animation
 	Animation light_punch;
@@ -432,7 +462,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	light_punch.frames.push_back({ 249, 565, 96, 91 });
 	light_punch.speed = 10.0f;
 	light_punch.loop = false;
-	guile_animator.AddAnimation("light_punch", light_punch);
+	character_anim.AddAnimation("light_punch", light_punch);
 
 	// Medium punch animation
 	Animation medium_punch;
@@ -441,7 +471,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	medium_punch.frames.push_back({ 245, 730, 182, 94 });
 	medium_punch.speed = 10.0f;
 	medium_punch.loop = false;
-	guile_animator.AddAnimation("medium_punch", medium_punch);
+	character_anim.AddAnimation("medium_punch", medium_punch);
 
 	// Hadouken animation
 	Animation hadouken_anim;
@@ -451,7 +481,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	hadouken_anim.frames.push_back({ 532, 2361, 188, 87 });
 	hadouken_anim.speed = 10.0f;
 	hadouken_anim.loop = false;
-	guile_animator.AddAnimation("hadouken", hadouken_anim);
+	character_anim.AddAnimation("hadouken", hadouken_anim);
 
 	// Victory animation
 	Animation victory;
@@ -472,7 +502,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	victory.frames.push_back({ 887, 4024, 82, 148 });
 	victory.speed = 8.0f;
 	victory.loop = false;
-	guile_animator.AddAnimation("victory", victory);
+	character_anim.AddAnimation("victory", victory);
 
 	// Hurt animation
 	Animation hurt;
@@ -483,7 +513,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	hurt.frames.push_back({ 102, 3409, 70, 87 });
 	hurt.speed = 10.0f;
 	hurt.loop = false;
-	guile_animator.AddAnimation("hurt", hurt);
+	character_anim.AddAnimation("hurt", hurt);
 
 	// Defeat animation
 	Animation die;
@@ -493,7 +523,7 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	die.frames.push_back({ 746, 3782, 139, 34 });
 	die.speed = 6.0f;
 	die.loop = false;
-	guile_animator.AddAnimation("die", die);
+	character_anim.AddAnimation("die", die);
 
 	// Start animation
 	Animation start;
@@ -512,10 +542,29 @@ Animator ModuleStageSelector::CreateGuileAnimator() const
 	start.frames.push_back({ 1272, 4220, 76, 115 });
 	start.speed = 7.0;
 	start.loop = false;
-	guile_animator.AddAnimation("start", start);
+	character_anim.AddAnimation("start", start);
 
 	// Set the starting animation;
-	guile_animator.SetDefaultAnimation("idle");
+	character_anim.SetDefaultAnimation("idle");
 
-	return guile_animator;
+	// Projectile
+	// Projectile
+	Animation movement;
+	movement.frames.push_back({ 843, 2375, 63, 17 });
+	movement.frames.push_back({ 1074, 2382, 59, 10 });
+	movement.frames.push_back({ 922, 2375, 63, 17 });
+	movement.frames.push_back({ 1000, 2382, 59, 17 });
+	movement.speed = 10.0f;
+	movement.loop = true;
+	projectile_anim.AddAnimation("movement", movement);
+
+	Animation despawn;
+	despawn.frames.push_back({ 1150, 2372, 26, 20 });
+	despawn.frames.push_back({ 1194, 2367, 26, 25 });
+	despawn.frames.push_back({ 1209, 2367, 30, 28 });
+	despawn.speed = 10.0f;
+	despawn.loop = false;
+	projectile_anim.AddAnimation("despawn", despawn);
+
+	projectile_anim.SetDefaultAnimation("movement");
 }

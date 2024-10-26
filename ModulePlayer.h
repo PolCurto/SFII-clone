@@ -2,7 +2,7 @@
 #define __MODULEPLAYER_H__
 
 #include "ModuleCharacter.h"
-#include "ModuleHadouken.h"
+#include "ModuleProjectile.h"
 #include "Animation.h"
 #include "Globals.h"
 #include "Point.h"
@@ -25,10 +25,10 @@ public:
 	void DrawToScreen();
 
 	void Hit(iPoint position, int area) override;
-	void ThrowHadouken();
+	void ThrowProjectile();
 
 private:
-	ModuleHadouken* hadouken;
+	ModuleProjectile* projectile;
 	Animation hadouken_anim;
 };
 

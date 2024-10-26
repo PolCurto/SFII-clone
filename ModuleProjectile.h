@@ -1,9 +1,9 @@
-#ifndef __MODULEHADOUKEN_H__
-#define __MODULEHADOUKEN_H__
+#ifndef __MODULEPPROJECTILE_H_
+#define __MODULEPPROJECTILE_H_
 
 #include "Module.h"
 #include "Globals.h"
-#include "Animation.h"
+#include "Animator.h"
 #include "Point.h"
 #include "Hitbox.h"
 
@@ -11,11 +11,11 @@ class ModuleCharacter;
 
 struct SDL_Texture;
 
-class ModuleHadouken : public Module
+class ModuleProjectile : public Module
 {
 public:
-	ModuleHadouken(bool start_enabled = false);
-	~ModuleHadouken();
+	ModuleProjectile(bool start_enabled = false);
+	~ModuleProjectile();
 
 	bool Start();
 	update_status Update();
@@ -28,10 +28,9 @@ public:
 
 public:
 	SDL_Texture* graphics = nullptr;
-	SDL_Rect sprite;
-	Animation despawn;
-	bool finished = false;
-	bool isFlipped = false;
+	Animator animator;
+	bool is_finished = false;
+	bool is_flipped = false;
 
 private:
 	float time_to_kill;
@@ -41,4 +40,4 @@ private:
 	ModuleCharacter* enemy;
 };
 
-#endif // __MODULEHADOUKEN_H__
+#endif // __MODULEPPROJECTILE_H_
