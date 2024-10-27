@@ -48,13 +48,13 @@ ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enab
 	characters.push_back(new MenuSelection(usa_2, ken, { 15, 279, 96, 96 }, { 38, 380, 50, 15 }, { 96, 172 }));
 
 	selected_character = 0;
-
-	// Ryu character
-	//ryu = new CharacterData("ryu4.png", CreateRyuAnimator(), {0, 0, 0, 0});
 }
 
 ModuleStageSelector::~ModuleStageSelector()
-{}
+{
+	for (vector<MenuSelection*>::iterator it = characters.begin(); it != characters.end(); ++it)
+		RELEASE(*it);
+}
 
 // Load assets
 bool ModuleStageSelector::Start()

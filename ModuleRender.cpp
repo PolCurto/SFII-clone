@@ -101,9 +101,9 @@ bool ModuleRender::CleanUp()
 bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, bool flip) const
 {
 	bool ret = true;
-	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
+	SDL_Rect rect = {0, 0, 0, 0};
+	rect.x = static_cast<int>(camera.x * speed) + x * SCREEN_SIZE;
+	rect.y = static_cast<int>(camera.y * speed) + y * SCREEN_SIZE;
 
 	if(section != NULL)
 	{

@@ -46,7 +46,7 @@ public:
 	ModuleStageSelector* stage_selector;
 	ModuleProjectile* projectile;
 
-	float delta;
+	float delta = 0;
 
 private:
 

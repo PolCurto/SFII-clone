@@ -25,7 +25,7 @@ update_status ModuleFadeToBlack::Update()
 	if(start_time > 0)
 	{
 		Uint32 now = SDL_GetTicks() - start_time;
-		float normalized = (float) now / (float) total_time;
+		float normalized = static_cast<float>(now) / static_cast<float>(total_time);
 		
 		if(normalized > 1.0f)
 			normalized = 1.0f;
@@ -34,7 +34,7 @@ update_status ModuleFadeToBlack::Update()
 			normalized = 1.0f - normalized;
 
 		// Draw a screen-size black rectangle with alpha
-		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8) (normalized * 255.0f));
+		SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, static_cast<Uint8>(normalized * 255.0f));
 		SDL_RenderFillRect(App->renderer->renderer, NULL);
 
 		if(module_off == nullptr && module_on != nullptr)
@@ -70,7 +70,7 @@ void ModuleFadeToBlack::FadeToBlack(Module* module_on, Module* module_off, float
 {
 	fading_in = (module_off != nullptr) ? true : false;
 	start_time = SDL_GetTicks();
-	total_time = (Uint32) (time  * 0.5f * 1000.0f);
+	total_time = static_cast<Uint32>(time  * 0.5f * 1000.0f);
 
 	this->module_on = module_on;
 	this->module_off = module_off;
