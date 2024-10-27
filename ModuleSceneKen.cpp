@@ -48,6 +48,8 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	girl.frames.push_back({ 624, 144, 32, 56 });
 	girl.frames.push_back({ 624, 80, 32, 56 });
 	girl.speed = 4.0f;
+
+	match_started = false;
 }
 
 ModuleSceneKen::~ModuleSceneKen()
@@ -71,7 +73,7 @@ bool ModuleSceneKen::Start()
 	App->projectile->Enable();
 
 	// TODO 0: trigger background music
-	App->audio->PlayMusic("guile.ogg");
+	App->audio->PlayMusic("ken.ogg");
 
 	// Set camera limit
 	App->renderer->cameraLimit = 500;

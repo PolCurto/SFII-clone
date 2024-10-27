@@ -1,9 +1,6 @@
 #pragma once
 
 #include "SDL/include/SDL.h"
-#include "Application.h"
-#include "Module.h"
-#include "ModuleFadeToBlack.h"
 #include "Point.h"
 
 struct SDL_Texture;

@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneKen.h"
 #include "ModuleSceneHonda.h"
+#include "ModuleSceneGuile.h"
 #include "ModuleStageSelector.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -33,18 +34,18 @@ ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enab
 	characters.push_back(new MenuSelection(japan, ryu, { 15, 153, 96, 96 }, { 40, 254, 47, 15 }, { 96, 140 }));
 
 	// Guile
-	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 290, 55 });
+	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 275, 25 });
 	Animator guile_animator, guile_projectile_animator;
 	CreateGuileAnimator(guile_animator, guile_projectile_animator);
 	CharacterData guile("guile.png", guile_animator, guile_projectile_animator);
 	characters.push_back(new MenuSelection(usa, guile, { 332, 153, 96, 96 }, { 343, 254, 74, 15 }, { 192, 140 }));
 
 	// Ken
-	//StageIcon usa tal
+	StageIcon usa_2({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 285, 65 });
 	Animator ken_animator, ken_projectile_animator;
 	CreateKenAnimator(ken_animator, ken_projectile_animator);
 	CharacterData ken("ken.png", ken_animator, ken_projectile_animator);
-	characters.push_back(new MenuSelection(usa, ken, { 15, 279, 96, 96 }, { 38, 380, 50, 15 }, { 96, 172 }));
+	characters.push_back(new MenuSelection(usa_2, ken, { 15, 279, 96, 96 }, { 38, 380, 50, 15 }, { 96, 172 }));
 
 	selected_character = 0;
 
@@ -63,7 +64,7 @@ bool ModuleStageSelector::Start()
 	graphics = App->textures->Load("stage_select.png");
 
 	characters.at(0)->stage_to_load = App->scene_honda;
-	characters.at(1)->stage_to_load = App->scene_ken;
+	characters.at(1)->stage_to_load = App->scene_guile;
 	characters.at(2)->stage_to_load = App->scene_ken;
 
 	App->audio->PlayMusic("stageselect.ogg");

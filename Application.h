@@ -16,6 +16,7 @@ class ModulePlayer;
 class ModuleEnemy;
 class ModuleSceneKen;
 class ModuleSceneHonda;
+class ModuleSceneGuile;
 class ModuleStageSelector;
 class ModuleProjectile;
 
@@ -41,6 +42,7 @@ public:
 	ModuleEnemy* enemy;
 	ModuleSceneKen* scene_ken;
 	ModuleSceneHonda* scene_honda;
+	ModuleSceneGuile* scene_guile;
 	ModuleStageSelector* stage_selector;
 	ModuleProjectile* projectile;
 
