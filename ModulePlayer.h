@@ -26,6 +26,7 @@ public:
 
 	void Hit(const iPoint& position, const int area) override;
 	void ThrowProjectile();
+	void WinMatch() override;
 
 private:
 	ModuleProjectile* projectile;

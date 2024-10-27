@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModuleCharacter.h"
 #include "ModuleInput.h"
-#include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "SDL/include/SDL.h"
 

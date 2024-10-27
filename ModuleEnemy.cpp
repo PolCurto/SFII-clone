@@ -4,6 +4,7 @@
 #include "ModuleEnemy.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 #include "SDL/include/SDL.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -316,4 +317,9 @@ void ModuleEnemy::Hit(const iPoint& position, const int area)
 	}
 }
 
-
+void ModuleEnemy::WinMatch()
+{
+	if (state == VICTORY) return;
+	ModuleCharacter::WinMatch();
+	App->audio->PlayFx(1, 0);
+}

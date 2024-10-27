@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 #include "SDL/include/SDL.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -211,4 +212,11 @@ void ModulePlayer::ThrowProjectile()
 {
 	projectile->is_flipped = is_flipped;
 	projectile->Spawn();
+}
+
+void ModulePlayer::WinMatch()
+{
+	if (state == VICTORY) return;
+	ModuleCharacter::WinMatch();
+	App->audio->PlayFx(0, 0);
 }

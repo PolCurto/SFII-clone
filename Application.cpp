@@ -56,6 +56,10 @@ bool Application::Init()
 			ret = (*it)->Start();
 	}
 
+	// Load the sound effects
+	audio->LoadFx("you win.wav");
+	audio->LoadFx("you lose.wav");
+
 	// Start the first scene --
 	fade->FadeToBlack(stage_selector, nullptr, 3.0f);
 

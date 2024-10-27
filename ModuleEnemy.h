@@ -24,6 +24,7 @@ public:
 
 	void DoSomething();
 	void Hit(const iPoint& position, const int area) override;
+	void WinMatch() override;
 
 private: 
 	Animator animator;
