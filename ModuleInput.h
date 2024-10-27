@@ -58,7 +58,7 @@ public:
 	}
 
 	// Check for window events last frame
-	bool GetWindowEvent(EventWindow code) const;
+	bool GetWindowEvent(const EventWindow& code) const;
 
 	// Get mouse / axis position
 	const iPoint& GetMouseMotion() const;

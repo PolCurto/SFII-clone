@@ -18,7 +18,7 @@ public:
 	MenuSelection() : stage_icon(), character_data(), stage_to_load(), character_icon(), character_name(), selected(false), selector_position()
 	{}
 
-	MenuSelection(StageIcon icon, CharacterData data, SDL_Rect character, SDL_Rect name, iPoint position)
+	MenuSelection(const StageIcon& icon, const CharacterData& data, const SDL_Rect& character, const SDL_Rect& name, const iPoint& position)
 		: stage_icon(icon), character_data(data), stage_to_load(nullptr), character_icon(character), character_name(name), selected(false), selector_position(position)
 	{}
 

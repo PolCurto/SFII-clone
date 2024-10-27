@@ -137,7 +137,7 @@ bool ModuleInput::CleanUp()
 }
 
 // ---------
-bool ModuleInput::GetWindowEvent(EventWindow ev) const
+bool ModuleInput::GetWindowEvent(const EventWindow& ev) const
 {
 	return windowEvents[ev];
 }

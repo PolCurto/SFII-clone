@@ -1,7 +1,5 @@
 #pragma once
-#include <vector>
 #include <unordered_map>
-#include <string>
 #include "Animation.h"
 
 using namespace std;
@@ -18,7 +16,7 @@ public:
 	Animator() : animations(), current_animation()
 	{}
 
-	SDL_Rect& AnimateAction(const string &action)
+	SDL_Rect& AnimateAction(const char* action)
 	{
 		// When the current animation is changed, resets the previous one
 		if (current_animation != &animations[action] && current_animation != nullptr)

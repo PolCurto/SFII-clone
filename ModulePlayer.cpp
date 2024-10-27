@@ -128,7 +128,7 @@ void ModulePlayer::CheckPlayerInputs()
 
 void ModulePlayer::DrawToScreen()
 {
-	SDL_Rect currentFrame;
+	SDL_Rect currentFrame{ 0, 0, 0, 0 };
 
 	switch (state)
 	{
@@ -193,9 +193,6 @@ void ModulePlayer::DrawToScreen()
 
 	// Speed of 3 to match the camera speed, don't really know why
 	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, is_flipped);
-
-	// Debug hitbox
-	//App->renderer->Blit(graphics, position.x - 20, position.y - 85, &hitbox.area, SCREEN_SIZE);
 }
 
 void ModulePlayer::Hit(const iPoint& position, const int area)

@@ -98,7 +98,7 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, bool flip)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, bool flip) const
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -135,7 +135,6 @@ void ModuleRender::CamFollowPlayer()
 {
 	camera.x = -((App->player->position.x + App->enemy->position.x) / 2) + (SCREEN_WIDTH / 2);
 	camera.y = 0;
-
 
 	if (camera.x > 0) camera.x = 0;
 	else if (camera.x < -cameraLimit) camera.x = -cameraLimit;

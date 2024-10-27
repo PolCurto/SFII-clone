@@ -17,7 +17,7 @@ public:
 	bool CleanUp();
 
 	SDL_Texture* const Load(const char* path);
-	void Unload(SDL_Texture* texture);
+	void Unload(const SDL_Texture* texture);
 
 private:
 	std::list<SDL_Texture*> textures;
