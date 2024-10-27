@@ -77,7 +77,7 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			Mix_FadeOutMusic((int) (fade_time * 1000.0f));
+			Mix_FadeOutMusic(static_cast<int>(fade_time * 1000.0f));
 		}
 		else
 		{
@@ -99,7 +99,7 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if(Mix_FadeInMusic(music, -1, static_cast<int>(fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -139,7 +139,7 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool ModuleAudio::PlayFx(unsigned int id, int repeat)
+bool ModuleAudio::PlayFx(unsigned int id, int repeat) const
 {
 	bool ret = false;
 

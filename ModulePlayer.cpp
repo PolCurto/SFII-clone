@@ -11,7 +11,7 @@
 ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 {
 	hitbox.parent = this;
-	debugRect = { 1061, 2457, 20, 20 };
+	projectile = nullptr;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -79,8 +79,6 @@ void ModulePlayer::Move()
 	}
 
 	hitbox.area = { position.x - 20, position.y - 85, 40, 80 };
-
-	//LOG("Hitbox x1: %d, x2: %d, y1: %d, y2: %d", hitbox.area.x, hitbox.area.x + hitbox.area.w, hitbox.area.y, hitbox.area.y + hitbox.area.h);
 }
 
 void ModulePlayer::CheckPlayerInputs()
@@ -200,20 +198,16 @@ void ModulePlayer::DrawToScreen()
 	//App->renderer->Blit(graphics, position.x - 20, position.y - 85, &hitbox.area, SCREEN_SIZE);
 }
 
-void ModulePlayer::Hit(iPoint position, int area)
+void ModulePlayer::Hit(const iPoint& position, const int area)
 {
 	punch_box.area.x = position.x - (area / 2);
 	punch_box.area.y = position.y - (area / 2);
 	punch_box.area.w = punch_box.area.h = area;
 
-	debugRect.w = debugRect.h = area;
-
 	if (punch_box.IsColliding(App->enemy->hitbox))
 	{
 		App->enemy->TakeDamage(1);
 	}
-
-	App->renderer->Blit(graphics, punch_box.area.x, punch_box.area.y, &debugRect, SCREEN_SIZE);
 }
 
 void ModulePlayer::ThrowProjectile()

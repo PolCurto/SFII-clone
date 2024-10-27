@@ -23,7 +23,7 @@ public:
 	void DrawToScreen();
 
 	void DoSomething();
-	void Hit(iPoint position, int area) override;
+	void Hit(const iPoint& position, const int area) override;
 
 private: 
 	Animator animator;

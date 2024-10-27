@@ -17,7 +17,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	void SetCharactersLimit();
+	void SetCharactersLimit() const;
 
 public:
 

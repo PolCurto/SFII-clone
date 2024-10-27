@@ -11,6 +11,9 @@ ModuleProjectile::ModuleProjectile(bool start_enabled) : Module(start_enabled)
 {
 	time_to_kill = 4.0f;
 	hitbox.parent = this;
+	enemy = nullptr;
+	on_screen = false;
+	timer = 0;
 }
 
 ModuleProjectile::~ModuleProjectile()

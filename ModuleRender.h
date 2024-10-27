@@ -26,7 +26,7 @@ public:
 public:
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect camera;
-	float cameraLimit = 0;
+	int cameraLimit = 0;
 
 private:
 	bool debugCamera = false;

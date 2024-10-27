@@ -42,9 +42,9 @@ public:
 
 	virtual void Move();
 	virtual void StartMatch();
-	virtual void SetPositionLimits(int min, int max);
-	virtual void Hit(iPoint position, int area) {}
-	virtual void TakeDamage(int damage);
+	virtual void SetPositionLimits(const int min, const int max);
+	virtual void Hit(const iPoint& position, const int area) {}
+	virtual void TakeDamage(const int damage);
 	virtual void WinMatch();
 
 public:
@@ -63,11 +63,9 @@ protected:
 	bool is_flipped;
 	Hitbox punch_box;
 
-	SDL_Rect debugRect;
 	int life;
 	bool is_hurt;
 	bool is_enabled;
-
 };
 
 #endif // __MODULECHARACTER_H__

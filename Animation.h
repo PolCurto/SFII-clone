@@ -33,7 +33,7 @@ public:
 			// If the animation doesn't loop the frame number stays at the last and finishes
 			else
 			{	
-				current_frame = frames.size() - 1;
+				current_frame = static_cast<float>(frames.size() - 1);
 				finished = true;
 			}
 		}
@@ -47,7 +47,7 @@ public:
 		finished = false;
 	}
 
-	int GetCurrentFrameNum()
+	int GetCurrentFrameNum() const
 	{
 		return (int)current_frame;
 	}

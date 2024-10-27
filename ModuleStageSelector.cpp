@@ -34,14 +34,14 @@ ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enab
 	characters.push_back(new MenuSelection(japan, ryu, { 15, 153, 96, 96 }, { 40, 254, 47, 15 }, { 96, 140 }));
 
 	// Guile
-	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 275, 25 });
+	StageIcon usa({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 275, 35 });
 	Animator guile_animator, guile_projectile_animator;
 	CreateGuileAnimator(guile_animator, guile_projectile_animator);
 	CharacterData guile("guile.png", guile_animator, guile_projectile_animator);
 	characters.push_back(new MenuSelection(usa, guile, { 332, 153, 96, 96 }, { 343, 254, 74, 15 }, { 192, 140 }));
 
 	// Ken
-	StageIcon usa_2({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 285, 65 });
+	StageIcon usa_2({ 111, 63, 32, 24 }, { 111, 29, 32, 24 }, { 111, 63, 32, 24 }, { 285, 70 });
 	Animator ken_animator, ken_projectile_animator;
 	CreateKenAnimator(ken_animator, ken_projectile_animator);
 	CharacterData ken("ken.png", ken_animator, ken_projectile_animator);

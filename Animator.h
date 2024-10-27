@@ -40,12 +40,12 @@ public:
 		current_animation = &animations[name];
 	}
 
-	bool AnimationFinished()
+	bool AnimationFinished() const
 	{
 		return current_animation->finished;
 	}
 
-	int GetCurrentFrameNum()
+	int GetCurrentFrameNum() const
 	{
 		return current_animation->GetCurrentFrameNum();
 	}

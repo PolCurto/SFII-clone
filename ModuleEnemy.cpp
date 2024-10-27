@@ -124,8 +124,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 
 	// Set the hitbox parameters
 	hitbox.parent = this;
-
-	debugRect = { 726, 4908, 40, 40 };
 }
 
 ModuleEnemy::~ModuleEnemy()
@@ -248,9 +246,6 @@ void ModuleEnemy::DrawToScreen()
 
 	// Speed of 3 to match the camera speed, don't really know why
 	App->renderer->Blit(graphics, position.x - (currentFrame.w / 2), position.y - currentFrame.h, &currentFrame, SCREEN_SIZE, is_flipped);
-
-	//Hitbox Debug
-	//App->renderer->Blit(graphics, position.x - 25, position.y - 85, &hitbox.area, SCREEN_SIZE);
 }
 
 void ModuleEnemy::DoSomething()
@@ -309,20 +304,16 @@ void ModuleEnemy::DoSomething()
 	timer += App->delta;
 }
 
-void ModuleEnemy::Hit(iPoint position, int area)
+void ModuleEnemy::Hit(const iPoint& position, const int area)
 {
 	punch_box.area.x = position.x - (area / 2);
 	punch_box.area.y = position.y - (area / 2);
 	punch_box.area.w = punch_box.area.h = area;
 
-	debugRect.w = debugRect.h = area;
-
 	if (punch_box.IsColliding(App->player->hitbox))
 	{
 		App->player->TakeDamage(1);
 	}
-
-	App->renderer->Blit(graphics, punch_box.area.x, punch_box.area.y, &debugRect, SCREEN_SIZE);
 }
 
 

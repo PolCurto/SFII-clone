@@ -165,7 +165,7 @@ update_status ModuleSceneGuile::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneGuile::SetCharactersLimit()
+void ModuleSceneGuile::SetCharactersLimit() const
 {
 	App->player->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);
 	App->enemy->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);

@@ -17,7 +17,7 @@ public:
 	StageIcon() : selected_icon(), unselected_icon(), current_icon(), position()
 	{}
 	
-	StageIcon(SDL_Rect selected, SDL_Rect unselected, SDL_Rect current, iPoint pos) 
+	StageIcon(const SDL_Rect& selected, const SDL_Rect& unselected, const SDL_Rect& current, const iPoint& pos)
 		: selected_icon(selected), unselected_icon(unselected), current_icon(current), position(pos)
 	{}
 };

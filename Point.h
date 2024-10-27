@@ -12,7 +12,7 @@ public:
 
 	TYPE x, y;
 
-	Point()
+	Point(): x(), y()
 	{}
 	Point(TYPE x, TYPE y) : x(x), y(y)
 	{}

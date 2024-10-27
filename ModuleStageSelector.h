@@ -30,7 +30,7 @@ public:
 	SDL_Rect background;
 	SDL_Rect player_selector;
 	vector<MenuSelection*> characters;
-	int selected_character;
+	unsigned int selected_character;
 };
 
 #endif // __MODULESTAGESELECTOR_H__

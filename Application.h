@@ -46,14 +46,14 @@ public:
 	ModuleStageSelector* stage_selector;
 	ModuleProjectile* projectile;
 
-	double delta;
+	float delta;
 
 private:
 
 	std::list<Module*> modules;
 	std::chrono::steady_clock::time_point current_time;
 	std::chrono::steady_clock::time_point last_time;
-	std::chrono::duration<double, std::milli> time_lapse;
+	std::chrono::duration<float, std::milli> time_lapse;
 };
 
 extern Application* App;

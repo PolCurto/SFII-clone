@@ -12,7 +12,7 @@ public:
 	Module parent;
 
 public:
-	Hitbox() : area({0, 0, 0, 0}), parent(nullptr)
+	Hitbox() : area(), parent()
 	{}
 
 	bool IsColliding(const Hitbox& other_hitbox) const

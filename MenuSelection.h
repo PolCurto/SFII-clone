@@ -15,7 +15,7 @@ public:
 	iPoint selector_position;
 
 public:
-	MenuSelection() : stage_icon(), character_data(), stage_to_load(), character_icon(), character_name()
+	MenuSelection() : stage_icon(), character_data(), stage_to_load(), character_icon(), character_name(), selected(false), selector_position()
 	{}
 
 	MenuSelection(StageIcon icon, CharacterData data, SDL_Rect character, SDL_Rect name, iPoint position)

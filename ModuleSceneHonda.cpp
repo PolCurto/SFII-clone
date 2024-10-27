@@ -61,6 +61,8 @@ ModuleSceneHonda::ModuleSceneHonda(bool start_enabled) : Module(start_enabled)
 	face.frames.push_back({ 688, 64, 95, 104 });
 	face.frames.push_back({ 790, 64, 95, 104 });
 	face.speed = 2.0f;
+
+	match_started = false;
 }
 
 ModuleSceneHonda::~ModuleSceneHonda()
@@ -178,7 +180,7 @@ update_status ModuleSceneHonda::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneHonda::SetCharactersLimit()
+void ModuleSceneHonda::SetCharactersLimit() const
 {
 	App->player->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);
 	App->enemy->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);

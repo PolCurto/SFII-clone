@@ -174,7 +174,7 @@ update_status ModuleSceneKen::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneKen::SetCharactersLimit()
+void ModuleSceneKen::SetCharactersLimit() const
 {
 	App->player->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);
 	App->enemy->SetPositionLimits(-App->renderer->camera.x, -App->renderer->camera.x + SCREEN_WIDTH);

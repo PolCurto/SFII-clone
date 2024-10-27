@@ -24,12 +24,12 @@ public:
 	void CheckPlayerInputs();
 	void DrawToScreen();
 
-	void Hit(iPoint position, int area) override;
+	void Hit(const iPoint& position, const int area) override;
 	void ThrowProjectile();
 
 private:
 	ModuleProjectile* projectile;
-	Animation hadouken_anim;
+	Animation projectile_anim;
 };
 
 #endif // __MODULEPLAYER_H__

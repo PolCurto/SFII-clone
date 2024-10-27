@@ -1,8 +1,6 @@
 #pragma once
 
-#include "SDL/include/SDL.h"
 #include "Animator.h"
-#include "ModuleProjectile.h"
 
 class CharacterData
 {
@@ -12,10 +10,9 @@ public:
 	Animator projectile_animator;
 
 public:
-	CharacterData() : texture_name(), animator()
+	CharacterData() : texture_name(), animator(), projectile_animator()
 	{}
 	
-	CharacterData(char* n, Animator a, Animator p) : texture_name(n), animator(a), projectile_animator(p)
+	CharacterData(char* n, const Animator& a, const Animator& p) : texture_name(n), animator(a), projectile_animator(p)
 	{}
-
 };
