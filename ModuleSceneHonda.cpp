@@ -11,8 +11,6 @@
 #include "ModuleFadeToBlack.h"
 #include "SDL/include/SDL.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
-
 ModuleSceneHonda::ModuleSceneHonda(bool start_enabled) : Module(start_enabled)
 {
 	// ground
@@ -128,7 +126,7 @@ update_status ModuleSceneHonda::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		// Switch too ken module
+		// Switch to ken module
 		App->fade->FadeToBlack(App->stage_selector, App->scene_honda, 3.0f);
 	}
 

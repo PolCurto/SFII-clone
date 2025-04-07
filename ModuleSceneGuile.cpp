@@ -11,8 +11,6 @@
 #include "ModuleFadeToBlack.h"
 #include "SDL/include/SDL.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
-
 ModuleSceneGuile::ModuleSceneGuile(bool start_enabled) : Module(start_enabled)
 {
 	// ground

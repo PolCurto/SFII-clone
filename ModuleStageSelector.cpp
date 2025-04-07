@@ -14,8 +14,6 @@
 #include "SDL/include/SDL.h"
 #include "MenuSelection.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
-
 ModuleStageSelector::ModuleStageSelector(bool start_enabled) : Module(start_enabled)
 {
 	// Background

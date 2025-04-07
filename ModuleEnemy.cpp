@@ -129,7 +129,6 @@ ModuleEnemy::ModuleEnemy(bool start_enabled) : ModuleCharacter(start_enabled)
 
 ModuleEnemy::~ModuleEnemy()
 {
-	// Homework : check for memory leaks
 }
 
 // Load assets

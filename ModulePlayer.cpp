@@ -17,7 +17,6 @@ ModulePlayer::ModulePlayer(bool start_enabled) : ModuleCharacter(start_enabled)
 
 ModulePlayer::~ModulePlayer()
 {
-	// Homework : check for memory leaks
 }
 
 // Load assets

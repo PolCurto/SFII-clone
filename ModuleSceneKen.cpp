@@ -11,8 +11,6 @@
 #include "ModuleFadeToBlack.h"
 #include "SDL/include/SDL.h"
 
-// Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
-
 ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 {
 	// ground
@@ -21,7 +19,6 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	ground.w = 896;
 	ground.h = 72;
 
-	// TODO 2 : setup the foreground (red ship) with
 	// coordinates x,y,w,h from ken_stage.png -- Done
 	red_ship.x = 9;
 	red_ship.y = 25;
@@ -39,8 +36,6 @@ ModuleSceneKen::ModuleSceneKen(bool start_enabled) : Module(start_enabled)
 	flag.frames.push_back({848, 256, 40, 40});
 	flag.frames.push_back({848, 304, 40, 40});
 	flag.speed = 8.0f;
-
-	// TODO 4: Setup Girl Animation from coordinates from ken_stage.png
 
 	// We add each frame specifying the origion x and y in the ken.png, and its width and length
 	girl.frames.push_back({ 624, 16, 32, 56 });
@@ -67,12 +62,10 @@ bool ModuleSceneKen::Start()
 	
 	graphics = App->textures->Load("ken_stage.png");
 
-	// TODO 7: Enable the player module
 	App->player->Enable();
 	App->enemy->Enable();
 	App->projectile->Enable();
 
-	// TODO 0: trigger background music
 	App->audio->PlayMusic("ken.ogg");
 
 	// Set camera limit
@@ -97,32 +90,22 @@ bool ModuleSceneKen::CleanUp()
 // Update: draw background
 update_status ModuleSceneKen::Update()
 {
-	// TODO 5: make sure the ship goes up and down
 	// Probably not the best method, but works
 	ship_y += ship_sum;
 	if (abs(ship_y) > 4) ship_sum *= -1;
 
-	// Draw everything --------------------------------------
-	// TODO 1: Tweak the movement speed of the sea&sky + flag to your taste -- Done
 	App->renderer->Blit(graphics, 0, 0, &background, 2.0f); // sea and sky
 	App->renderer->Blit(graphics, 560, 8, &(flag.GetCurrentFrame()), 2.0f); // flag animation
 
-	// TODO 3: Draw the ship. Be sure to tweak the speed.
 	App->renderer->Blit(graphics, 0, (int)-ship_y, &red_ship, 2.5f); // red ship
 
-	// TODO 6: Draw the girl. Make sure it follows the ship movement!
 	App->renderer->Blit(graphics, 191, 103 - (int)ship_y, &(girl.GetCurrentFrame()), 2.5f);
 	
 	App->renderer->Blit(graphics, 0, 170, &ground, SCREEN_SIZE);
 
-	// TODO 10: Build an entire new scene "honda", you can find its
-	// and music in the Game/ folder
-
-	// TODO 11: Make that pressing space triggers a switch to honda logic module -- Donee
-	// using FadeToBlack module
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		// Switch too honda module
+		// Switch to honda module
 		App->fade->FadeToBlack(App->stage_selector, App->scene_ken, 3.0f);
 	}
 
